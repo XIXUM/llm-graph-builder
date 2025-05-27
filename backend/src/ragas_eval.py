@@ -12,6 +12,9 @@ from ragas.metrics import RougeScore, SemanticSimilarity, ContextEntityRecall
 from ragas.llms import LangchainLLMWrapper
 from ragas.embeddings import LangchainEmbeddingsWrapper
 import nltk
+from langchain_core.outputs.chat_generation import ChatGeneration
+from langchain_core.messages.base import BaseMessage
+import typing as t
 
 nltk.download('punkt')
 load_dotenv()

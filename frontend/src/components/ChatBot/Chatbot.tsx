@@ -14,6 +14,7 @@ import {
 } from '@neo4j-ndl/react';
 import { ArrowDownTrayIconOutline, XMarkIconOutline } from '@neo4j-ndl/react/icons';
 import ChatBotAvatar from '../../assets/images/chatbot-ai.png';
+import UserAvatar from '../../assets/images/chatbot-user.png';
 import {
   ChatbotProps,
   Chunk,
@@ -415,12 +416,13 @@ const Chatbot: FC<ChatbotProps> = (props) => {
           <Loader title='Deleting...'></Loader>
         </div>
       )}
+      <div className='chatbot-bg-backdrop' />
       <div
         className={`flex! overflow-y-auto pb-12 min-w-full pl-5 pr-5 chatBotContainer ${
           isChatOnly ? 'min-h-[calc(100dvh-114px)] max-h-[calc(100dvh-114px)]' : ''
         } `}
       >
-        <Widget className='n-bg-palette-neutral-bg-weak w-full' header='' isElevated={false}>
+        <Widget className='override-ndl-widget w-full' header='' isElevated={false}>
           <div className='flex! flex-col gap-4 gap-y-4'>
             {listMessages.map((chat, index) => {
               const messagechatModes = Object.keys(chat.modes);
@@ -451,6 +453,7 @@ const Chatbot: FC<ChatbotProps> = (props) => {
                         hasStatus
                         name='KM'
                         size='large'
+                        source={UserAvatar}
                         status={connectionStatus ? 'online' : 'offline'}
                         shape='square'
                         type='image'
@@ -556,7 +559,7 @@ const Chatbot: FC<ChatbotProps> = (props) => {
           </div>
         </Widget>
       </div>
-      <div className='n-bg-palette-neutral-bg-weak flex! gap-2.5 bottom-0 p-2.5 w-full'>
+      <div className='n-bg-palette-neutral-bg-weak flex! gap-2.5 bottom-0 p-2.5 w-full override-z-index-elevation'>
         <form onSubmit={handleSubmit} className={`flex! gap-2.5 w-full ${!isFullScreen ? 'justify-between' : ''}`}>
           <TextInput
             className={`n-bg-palette-neutral-bg-default flex-grow-7 ${
