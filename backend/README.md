@@ -68,6 +68,7 @@ d. **Verify Installation**:
 e. **Restart Your Backend Server**:
    Restart the server to confirm the issue is resolved.
 
+_NOTE:_ there is a script in /backend/test_SSL_Connection.py which does this installation and checks for the certificate first...
 
 ## Run backend project using unicorn
 Run the server:
