@@ -20,6 +20,55 @@ Follow these steps to set up and run the project locally:
 
 > pip install -r requirements.txt
 
+3. install punkt_tab by executing the following in your python console:
+
+```
+      import nltk
+      nltk.download('punkt')
+```
+
+if you receive this error message:
+
+```
+      [nltk_data] Error loading punkt: <urlopen error [SSL:
+      [nltk_data] CERTIFICATE_VERIFY_FAILED] certificate verify failed:
+      [nltk_data] unable to get local issuer certificate (_ssl.c:1000)>
+```
+
+The error indicates that the SSL certificate verification failed while trying to download the `punkt` resource. This is a common issue with Python's SSL configuration on macOS. You can resolve it by following these steps:
+
+### Fix SSL Certificate Issue on macOS
+
+a. **Install Certificates for Python**:
+   Run the following command in your terminal to install the necessary certificates for Python:
+   ```bash
+   /Applications/Python\ 3.x/Install\ Certificates.command
+   ```
+   Replace `3.x` with your installed Python version (e.g., `3.12`).
+
+b. **Retry the NLTK Download**:
+   After installing the certificates, retry the download in your Python shell or script:
+   ```python
+   import nltk
+   nltk.download('punkt')
+   ```
+
+c. **Alternative: Use HTTP Instead of HTTPS**:
+   If the issue persists, you can manually download the `punkt` resource:
+   - Visit [NLTK Data](https://www.nltk.org/nltk_data/) and download the `punkt` package.
+   - Extract the downloaded files and place them in the appropriate directory (e.g., `/Users/felixschaller/nltk_data`).
+
+d. **Verify Installation**:
+   Ensure the `punkt` resource is available by running:
+   ```python
+   import nltk
+   nltk.data.find('tokenizers/punkt')
+   ```
+
+e. **Restart Your Backend Server**:
+   Restart the server to confirm the issue is resolved.
+
+
 ## Run backend project using unicorn
 Run the server:
 > uvicorn score:app --reload
