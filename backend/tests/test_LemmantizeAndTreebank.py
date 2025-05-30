@@ -45,7 +45,8 @@ def show_lemmatized_output(num_sentences=3):
     for i in range(num_sentences):
         print(f"--- Sentence {i + 1} ---")
         tree = parsed_sents[i]
-        tree.draw()
+        #tree.draw()
+        tree.pretty_print()
         lemmatized = lemmatize_treebank_sentence(tree)
         for word, pos, lemma in lemmatized:
             print(f"{word:15} ({pos}) → {lemma}")
