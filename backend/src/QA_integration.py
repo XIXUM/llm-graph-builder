@@ -37,8 +37,6 @@ from src.shared.common_fn import load_embedding_model
 from src.shared.constants import *
 load_dotenv()
 
-# print("KEY:", os.getenv("OPENAI_API_KEY"))
-
 EMBEDDING_MODEL = os.getenv('EMBEDDING_MODEL')
 EMBEDDING_FUNCTION , _ = load_embedding_model(EMBEDDING_MODEL) 
 
