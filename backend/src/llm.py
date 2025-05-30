@@ -22,6 +22,8 @@ def get_llm(model: str):
     model = model.lower().strip()
     env_key = f"LLM_MODEL_CONFIG_{model}"
     env_value = os.environ.get(env_key)
+    print("ENV_KEY:", env_key)
+    print("ENV_VALUE:", env_value)
 
     if not env_value:
         err = f"Environment variable '{env_key}' is not defined as per format or missing"
@@ -55,7 +57,7 @@ def get_llm(model: str):
                 model=model_name)
             else:
                 llm = ChatOpenAI(
-                api_key=api_key,
+                openai_api_key=api_key,
                 model=model_name,
                 temperature=0,
                 )
