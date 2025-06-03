@@ -142,6 +142,8 @@ class TextStructure:
         MERGE (d:document {{name: {self.document.file_path.name}, created: {datetime.now()}}})
         RETURN d
         """
+        result = self.neo4j_client.run_query(queryStr)
+        return result
 
     def _createSection(self, section, i ):
         """
@@ -156,7 +158,7 @@ class TextStructure:
         #TODO: requires to add infrastructure
         queryStr = f"""
         MATCH (d:document) WHERE d.name = {self.document.file_path.name}
-        MERGE (s:section {{oder: {i}, created: {datetime.now()}}})
+        MERGE (s:section {{order: {i}, {self.creationStamp()}}})
         MERGE (h:heading {{caption: "{section['caption']}"}})
         ON CREATE SET h.created = {datetime.now()}
         MERGE (s)-[:has_heading]->(h)
@@ -164,6 +166,9 @@ class TextStructure:
         """
         result = self.neo4j_client.run_query(queryStr)
         return result
+
+    def creationStamp(self):
+        return f"created: {datetime.now()}, createdby: {__name__}"
 
 # Example usage
 if __name__ == "__main__":
