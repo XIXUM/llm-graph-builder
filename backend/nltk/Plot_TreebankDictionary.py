@@ -123,9 +123,9 @@ class TextStructure:
         return self.structure
 
     def print_structure(self):
-        _createDocument()
+        self._createDocument()
         for section, i in self.structure:
-            _createSection(section, i)
+            self._createSection(section, i)
             print(f"\n=== Caption: {section['caption']} ===")
             for i, paragraph in enumerate(section['paragraphs'], 1):
                 print(f"  Paragraph {i}:")
@@ -139,7 +139,7 @@ class TextStructure:
             record of the document node
         """
         queryStr = f"""
-        MERGE (d:document {{name: {self.document.file_path.name}, created: {datetime.now()}}})
+        MERGE (d:document {{name: {self.document.file_path.name}, {creationStamp})
         RETURN d
         """
         result = self.neo4j_client.run_query(queryStr)
@@ -160,7 +160,7 @@ class TextStructure:
         MATCH (d:document) WHERE d.name = {self.document.file_path.name}
         MERGE (s:section {{order: {i}, {self.creationStamp()}}})
         MERGE (h:heading {{caption: "{section['caption']}"}})
-        ON CREATE SET h.created = {datetime.now()}
+        ON CREATE SET {self.set_creationStamp('h')}
         MERGE (s)-[:has_heading]->(h)
         RETURN s
         """
@@ -168,7 +168,13 @@ class TextStructure:
         return result
 
     def creationStamp(self):
-        return f"created: {datetime.now()}, createdby: {__name__}"
+        return f"created: '{self.apoc_timestamp()}', createdby: '{__name__}'"
+
+    def set_creationStamp(self, node):
+        return f"h.created = '{self.apoc_timestamp()}', h.createdby = '{__name__}'"
+
+    def apoc_timestamp(self):
+        return f"apoc.date.toISO8601(datetime().epochMillis, \"ms\")"
 
 # Example usage
 if __name__ == "__main__":
