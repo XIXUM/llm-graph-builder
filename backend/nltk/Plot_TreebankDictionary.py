@@ -64,14 +64,14 @@ def hasChapterNum(text):
     Returns: boolean
 
     """
-    re.compile(r"^(\d+\.)?")
-    return bool(re.match(r"^(\d+\.)?", text))
+    pattern = re.compile(r"^(\d+((\.\d+)+|\.))")
+    return bool(pattern.match(text))
 
 def creationStamp() -> str:
     return f"created: {apoc_timestamp()}, createdby: '{get_frame_by_index(2)}'"
 
 def set_creationStamp(node : str) -> str:
-    return f"h.created = '{apoc_timestamp()}', h.createdby = '{get_frame_by_index(2)}'"
+    return f"{node}.created = '{apoc_timestamp()}', {node}.createdby = '{get_frame_by_index(2)}'"
 
 def apoc_timestamp() -> str:
     return f"apoc.date.toISO8601(datetime().epochMillis, \"ms\")"
@@ -151,6 +151,7 @@ class TextStructure:
             return (
                 text.isupper()
                 or hasChapterNum(text)
+                #TODO: 06.06.25 test pattern. Should look for single sentence instead
                 or len(text.split()) <= 5
             )
         return False
@@ -163,10 +164,10 @@ class TextStructure:
         for sec, section in enumerate(self.structure):
             self._createSection(section, sec)
             print(f"\n=== Caption: {section['caption']} ===")
-            for p, paragraph in enumerate(section['paragraphs'], 1):
+            for p, paragraph in enumerate(section['paragraphs']):
                 self._createParagraphs(paragraph, p, sec)
                 print(f"  Paragraph {p}:")
-                for ss, sentence in paragraph:
+                for ss, sentence in enumerate(paragraph):
                     self._createSentence(sentence, ss, p)
                     print(f"    - {sentence}")
 
@@ -179,7 +180,8 @@ class TextStructure:
         #TODO: 05.06.2025 requires to add infrastructure for context
         vars = ["d"]
         queryStr = f"""
-        MERGE (d:document {{name: \"{self.document.file_path.name}\", {creationStamp()}}})
+        MERGE (d:document {{name: \"{self.document.file_path.name}\"}})
+        ON CREATE SET {set_creationStamp('d')}
         RETURN {", ".join(vars)}
         """
         result = self.neo4j_context_client.run_query(queryStr)
@@ -205,7 +207,8 @@ class TextStructure:
             MATCH (d)-[:has_section]->(pr) WHERE pr.order = {i-1}
             """
         queryStr += f"""
-        MERGE (s:section {{order: {i}, {creationStamp()}}})
+        MERGE (s:section {{order: {i}}})
+        ON CREATE SET {set_creationStamp('s')}
         MERGE (h:heading {{caption: "{section['caption']}"}})
         ON CREATE SET {set_creationStamp('h')}
         MERGE (s)-[:has_heading]->(h)
@@ -241,7 +244,8 @@ class TextStructure:
             MATCH (s)-[:has_paragraph]->(op) WHERE op.order = {para_num-1}
             """
         queryStr +=f"""
-        MERGE (p:paragraph {{order: {para_num}, {creationStamp()}}})
+        MERGE (p:paragraph {{order: {para_num}}})
+        ON CREATE SET {set_creationStamp('p')}
         MERGE (s)-[:has_paragraph]->(p)
         """
         if para_num > 0:
@@ -276,7 +280,8 @@ class TextStructure:
             MATCH (p)-[:has_sentence]->(pr) WHERE pr.order = {sent_num - 1}
             """
         queryStr += f"""
-        MERGE (ss:sentence {{order: {sent_num}, content: \"{sentence}\", {creationStamp()}}})
+        MERGE (ss:sentence {{order: {sent_num}, content: \"{sentence}\"}})
+        ON CREATE SET {set_creationStamp('ss')}
         MERGE (p)-[:has_sentence]->(ss)
         """
         if sent_num > 0:
