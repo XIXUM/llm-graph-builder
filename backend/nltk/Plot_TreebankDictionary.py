@@ -3,6 +3,7 @@ from datetime import datetime
 import nltk
 import re
 from typing import List
+from neomodel import StructuredNode, StringProperty, IntegerProperty
 from Neo4jAccess import Neo4jDictionaryClient
 from pathlib import Path
 
@@ -166,14 +167,28 @@ class TextStructure:
         Returns: record of the section node
 
         """
+        vars = ["d", "s", "h"]
         queryStr = f"""
         MATCH (d:document) WHERE d.name = {self.document.file_path.name}
+        """
+        if i > 0:
+            vars.append("pr")
+            queryStr += f"""
+            MATCH (d)-[:has_section]->(pr) WHERE pr.order = {i-1}
+            """
+        queryStr += f"""
         MERGE (s:section {{order: {i}, {creationStamp()}}})
         MERGE (h:heading {{caption: "{section['caption']}"}})
         ON CREATE SET {set_creationStamp('h')}
         MERGE (s)-[:has_heading]->(h)
         MERGE (d)-[:has_section]->(s)
-        RETURN s
+        """
+        if i > 0:
+            queryStr += f"""
+            MERGE (pr)-[:successor]->(s)
+            """
+        queryStr += f"""
+        RETURN {", ".join(vars)}
         """
         result = self.neo4j_client.run_query(queryStr)
         return result
@@ -188,13 +203,64 @@ class TextStructure:
         Returns:
 
         """
+        vars = ["s", "p"]
         queryStr = f"""
         MATCH (s:section) WHERE s.order = {sec_num}
+        """
+        if para_num > 0:
+            vars.append("op")
+            queryStr +=f"""
+            MATCH (s)-[:has_paragraph]->(op) WHERE op.order = {para_num-1}
+            """
+        queryStr +=f"""
         MERGE (p:paragraph {{order: {para_num}, {creationStamp()}}})
         MERGE (s)-[:has_paragraph]->(p)
         """
+        if para_num > 0:
+            queryStr+= f"""
+            MERGE (op)-[:successor]->(p)
+            """
+        queryStr +=f"""
+        RETURN {", ".join(vars)}
+        """
         result = self.neo4j_client.run_query(queryStr)
         return result
+
+    def _createSentence(self, sentence, para_num, sent_num):
+        """
+        creates the sentence representation
+        Args:
+            sentence:
+            para_num:
+            sent_num:
+
+        Returns:
+
+        """
+
+        vars = ["p", "ss"]
+        queryStr = f"""
+        MATCH (p:paragraph) WHERE p.order = {para_num}
+        """
+        if sent_num > 0:
+            vars.append("pr")
+            queryStr += f"""
+            MATCH (p)-[:has_sentence]->(pr) WHERE pr.order = {sent_num - 1}
+            """
+        queryStr += f"""
+        MERGE (ss:sentence {{order: {sent_num}, content: \"{sentence}\", {creationStamp()}}})
+        MERGE (p)-[:has_sentence]->(ss)
+        """
+        if sent_num > 0:
+            queryStr += f"""
+            MERGE (pr)-[:successor]->(ss)
+            """
+        queryStr += f"""
+        RETURN {", ".join(vars)}
+        """
+        result = self.neo4j_client.run_query(queryStr)
+        return result
+
 
 # Example usage
 if __name__ == "__main__":
