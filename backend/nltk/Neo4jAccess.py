@@ -1,14 +1,13 @@
 from neo4j import GraphDatabase, basic_auth
 from typing import List, Dict, Any
 
-
-class Neo4jDictionaryClient:
+class Neo4jDefaultClient:
     def __init__(self, uri: str = "bolt://localhost:7687", user: str = "neo4j", password: str = "password",
                  database: str = "dictionary"):
         self.uri = uri
         self.user = user
         self.password = password
-        self.database = database
+        self.database = "neo4j"
         self.driver = GraphDatabase.driver(uri, auth=basic_auth(user, password))
 
     def close(self):
@@ -24,11 +23,20 @@ class Neo4jDictionaryClient:
             result = session.run(cypher_query, parameters)
             return [record.data() for record in result]
 
+
+class Neo4jDatabaseClient(Neo4jDefaultClient):
+    def __init__(self, uri: str = "bolt://localhost:7687", user: str = "neo4j", password: str = "password",
+                 database: str = "neo4j"):
+        super().__init__(uri, user, password)
+        self.database = database
+
+
+
 ####
 # enable to test it headless.
 # Example usage:
 if __name__ == "__main__":
-    client = Neo4jDictionaryClient(password="test1234")
+    client = Neo4jDatabaseClient(password="test1234")
 
     try:
         # Example query
