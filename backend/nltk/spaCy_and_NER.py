@@ -17,12 +17,12 @@ def entity_relation():
     doc = nlp(paragraph)
 
     # Visualize the named entities using displaCy
-    displacy.render(doc, style="ent", jupyter=False)
+    output = displacy.render(doc, style="ent", jupyter=False)
 
     sentence_spans: list[Span | Span] = list(doc.sents)
-    # displacy.serve(sentence_spans, style="dep")
+    displacy.serve(sentence_spans, style="dep")
 
-    displacy.serve(doc, style="ent")
+    # displacy.serve(doc, style="ent")
 
 if __name__ == "__main__":
     entity_relation()
