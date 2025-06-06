@@ -134,13 +134,14 @@ class TextStructure:
 
     def print_structure(self):
         self._createDocument()
-        for section, i in self.structure:
-            self._createSection(section, i)
+        for section, sec in self.structure:
+            self._createSection(section, sec)
             print(f"\n=== Caption: {section['caption']} ===")
-            for i, paragraph in enumerate(section['paragraphs'], 1):
-                self._createParagraphs(paragraph, i)
+            for p, paragraph in enumerate(section['paragraphs'], 1):
+                self._createParagraphs(paragraph, p, sec)
                 print(f"  Paragraph {i}:")
-                for sentence in paragraph:
+                for ss, sentence in paragraph:
+                    self._createSentence(sentence, ss, p)
                     print(f"    - {sentence}")
 
     def _createDocument(self):
@@ -149,7 +150,7 @@ class TextStructure:
         Returns:
             record of the document node
         """
-        #TODO: requires to add infrastructure for context
+        #TODO: 05.06.2025 requires to add infrastructure for context
         queryStr = f"""
         MERGE (d:document {{name: {self.document.file_path.name}, {creationStamp})
         RETURN d
@@ -193,7 +194,7 @@ class TextStructure:
         result = self.neo4j_client.run_query(queryStr)
         return result
 
-    def _createParagraphs(self, paragraph, sec_num, para_num):
+    def _createParagraphs(self, paragraph, para_num, sec_num):
         """
         method that creates a paragraph node of label paragraph in the graph database neo4j
         Args:
@@ -226,7 +227,7 @@ class TextStructure:
         result = self.neo4j_client.run_query(queryStr)
         return result
 
-    def _createSentence(self, sentence, para_num, sent_num):
+    def _createSentence(self, sentence, sent_num, para_num):
         """
         creates the sentence representation
         Args:
