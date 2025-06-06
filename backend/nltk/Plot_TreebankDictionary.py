@@ -65,6 +65,15 @@ def hasChapterNum(text):
     re.compile(r"^(\d+\.)?")
     return bool(re.match(r"^(\d+\.)?", text))
 
+def creationStamp() -> str:
+    return f"created: '{apoc_timestamp()}', createdby: '{__name__}'"
+
+def set_creationStamp(node : str) -> str:
+    return f"h.created = '{apoc_timestamp()}', h.createdby = '{__name__}'"
+
+def apoc_timestamp() -> str:
+    return f"apoc.date.toISO8601(datetime().epochMillis, \"ms\")"
+
 class TextStructure:
     def __init__(self, document: TextDocument):
         self.document = document
@@ -128,6 +137,7 @@ class TextStructure:
             self._createSection(section, i)
             print(f"\n=== Caption: {section['caption']} ===")
             for i, paragraph in enumerate(section['paragraphs'], 1):
+                self._createParagraphs(paragraph, i)
                 print(f"  Paragraph {i}:")
                 for sentence in paragraph:
                     print(f"    - {sentence}")
@@ -138,6 +148,7 @@ class TextStructure:
         Returns:
             record of the document node
         """
+        #TODO: requires to add infrastructure for context
         queryStr = f"""
         MERGE (d:document {{name: {self.document.file_path.name}, {creationStamp})
         RETURN d
@@ -155,26 +166,35 @@ class TextStructure:
         Returns: record of the section node
 
         """
-        #TODO: requires to add infrastructure
         queryStr = f"""
         MATCH (d:document) WHERE d.name = {self.document.file_path.name}
-        MERGE (s:section {{order: {i}, {self.creationStamp()}}})
+        MERGE (s:section {{order: {i}, {creationStamp()}}})
         MERGE (h:heading {{caption: "{section['caption']}"}})
-        ON CREATE SET {self.set_creationStamp('h')}
+        ON CREATE SET {set_creationStamp('h')}
         MERGE (s)-[:has_heading]->(h)
+        MERGE (d)-[:has_section]->(s)
         RETURN s
         """
         result = self.neo4j_client.run_query(queryStr)
         return result
 
-    def creationStamp(self):
-        return f"created: '{self.apoc_timestamp()}', createdby: '{__name__}'"
+    def _createParagraphs(self, paragraph, sec_num, para_num):
+        """
+        method that creates a paragraph node of label paragraph in the graph database neo4j
+        Args:
+            paragraph:
+            i:
 
-    def set_creationStamp(self, node):
-        return f"h.created = '{self.apoc_timestamp()}', h.createdby = '{__name__}'"
+        Returns:
 
-    def apoc_timestamp(self):
-        return f"apoc.date.toISO8601(datetime().epochMillis, \"ms\")"
+        """
+        queryStr = f"""
+        MATCH (s:section) WHERE s.order = {sec_num}
+        MERGE (p:paragraph {{order: {para_num}, {creationStamp()}}})
+        MERGE (s)-[:has_paragraph]->(p)
+        """
+        result = self.neo4j_client.run_query(queryStr)
+        return result
 
 # Example usage
 if __name__ == "__main__":
