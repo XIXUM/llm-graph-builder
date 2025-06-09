@@ -12,9 +12,8 @@
     <eClassifiers xsi:type="ecore:EClass" name="Row"/>
     <eClassifiers xsi:type="ecore:EClass" name="Cell">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="column" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="colSpan" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
-          defaultValueLiteral=""/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="rowSpan" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="colSpan" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="infrastructure" nsURI="http://www.xixum.org/semantics/infrastructure"

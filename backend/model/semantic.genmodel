@@ -20,8 +20,8 @@
       <genClasses ecoreClass="semantic.ecore#//artifact/Row"/>
       <genClasses ecoreClass="semantic.ecore#//artifact/Cell">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/Cell/column"/>
-        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/Cell/colSpan"/>
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/Cell/rowSpan"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/Cell/colSpan"/>
       </genClasses>
     </nestedGenPackages>
     <nestedGenPackages prefix="Infrastructure" disposableProviderFactory="true" ecorePackage="semantic.ecore#//infrastructure"/>
