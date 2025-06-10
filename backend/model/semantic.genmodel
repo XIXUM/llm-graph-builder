@@ -38,10 +38,13 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//Pair/key"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//Pair/value"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="semantic.ecore#//IIdentifiable"/>
+    <genClasses image="false" ecoreClass="semantic.ecore#//IIdentifiable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//IIdentifiable/hasID"/>
+    </genClasses>
     <genClasses image="false" ecoreClass="semantic.ecore#//IAtomic"/>
     <genClasses image="false" ecoreClass="semantic.ecore#//IAggregated"/>
     <genClasses image="false" ecoreClass="semantic.ecore#//IIterable"/>
+    <genClasses image="false" ecoreClass="semantic.ecore#//IContainable"/>
     <nestedGenPackages prefix="Artifact" disposableProviderFactory="true" ecorePackage="semantic.ecore#//artifact">
       <genClasses ecoreClass="semantic.ecore#//artifact/Artifact"/>
       <genClasses ecoreClass="semantic.ecore#//artifact/Document"/>
@@ -81,19 +84,109 @@
       <genClasses ecoreClass="semantic.ecore#//artifact/Token"/>
       <genClasses ecoreClass="semantic.ecore#//artifact/Word">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/Word/value"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//artifact/Word/word"/>
       </genClasses>
       <genClasses ecoreClass="semantic.ecore#//artifact/Number">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/Number/value"/>
       </genClasses>
-      <genClasses ecoreClass="semantic.ecore#//artifact/NamedIdentity"/>
+      <genClasses ecoreClass="semantic.ecore#//artifact/NamedIdentity">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/NamedIdentity/value"/>
+      </genClasses>
       <genClasses image="false" ecoreClass="semantic.ecore#//artifact/IPropertyable">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/IPropertyable/property"/>
       </genClasses>
       <genClasses image="false" ecoreClass="semantic.ecore#//artifact/SpreatSheetComponent"/>
     </nestedGenPackages>
-    <nestedGenPackages prefix="Infrastructure" disposableProviderFactory="true" ecorePackage="semantic.ecore#//infrastructure"/>
-    <nestedGenPackages prefix="Context" disposableProviderFactory="true" ecorePackage="semantic.ecore#//context"/>
-    <nestedGenPackages prefix="Dictionary" disposableProviderFactory="true" ecorePackage="semantic.ecore#//dictionary"/>
-    <nestedGenPackages prefix="Ruleset" disposableProviderFactory="true" ecorePackage="semantic.ecore#//ruleset"/>
+    <nestedGenPackages prefix="Infrastructure" disposableProviderFactory="true" ecorePackage="semantic.ecore#//infrastructure">
+      <genClasses ecoreClass="semantic.ecore#//infrastructure/Device">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//infrastructure/Device/subdir"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//infrastructure/PathEl">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//infrastructure/PathEl/isubdir"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//infrastructure/Domain">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//infrastructure/Domain/subdir"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="semantic.ecore#//infrastructure/ISubDir"/>
+      <genClasses image="false" ecoreClass="semantic.ecore#//infrastructure/IInfrastructureEl"/>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Context" disposableProviderFactory="true" ecorePackage="semantic.ecore#//context">
+      <genClasses ecoreClass="semantic.ecore#//context/ContextRoot">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//context/ContextRoot/entity"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//context/ContextRoot/event"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//context/ContextRoot/time"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//context/ContextRoot/relation"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//context/Entity">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//context/Entity/state"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//context/Entity/command"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//context/Entity/operation"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//context/Event">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//context/Event/next"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//context/Event/previous"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//context/Event/state"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//context/Event/time"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//context/State">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//context/State/event"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//context/Time">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//context/Time/event"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//context/AbsTime"/>
+      <genClasses ecoreClass="semantic.ecore#//context/RelativeTime"/>
+      <genClasses ecoreClass="semantic.ecore#//context/Relation">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//context/Relation/active_entity"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//context/Relation/passive_entity"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="semantic.ecore#//context/IContextEl"/>
+      <genClasses image="false" ecoreClass="semantic.ecore#//context/IChronological">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//context/IChronological/after"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//context/IChronological/before"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//context/IChronological/synchronous"/>
+      </genClasses>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Dictionary" disposableProviderFactory="true" ecorePackage="semantic.ecore#//dictionary">
+      <genClasses ecoreClass="semantic.ecore#//dictionary/DictionaryRoot">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//dictionary/DictionaryRoot/word"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//dictionary/DictionaryRoot/wordclass"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//dictionary/Word">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//dictionary/Word/ofType"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//dictionary/Word/baseform"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//dictionary/Word/stem"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//dictionary/WordClass"/>
+      <genClasses ecoreClass="semantic.ecore#//dictionary/Stem"/>
+      <genClasses image="false" ecoreClass="semantic.ecore#//dictionary/IDictionaryEl"/>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Ruleset" disposableProviderFactory="true" ecorePackage="semantic.ecore#//ruleset">
+      <genClasses ecoreClass="semantic.ecore#//ruleset/RuleRoot">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//ruleset/RuleRoot/token"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//ruleset/RuleRoot/command"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//ruleset/Token">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//ruleset/Token/type"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//ruleset/Command"/>
+      <genClasses image="false" ecoreClass="semantic.ecore#//ruleset/IRuleEl"/>
+    </nestedGenPackages>
   </genPackages>
 </genmodel:GenModel>

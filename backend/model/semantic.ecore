@@ -35,10 +35,14 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Property"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IIdentifiable" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IIdentifiable" abstract="true" interface="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="hasID" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IAtomic" abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="IAggregated" abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="IIterable" abstract="true" interface="true"
+      eSuperTypes="#//IAggregated"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IContainable" abstract="true" interface="true"
       eSuperTypes="#//IAggregated"/>
   <eSubpackages name="artifact" nsURI="http://www.xixum.org/semantics/artifact" nsPrefix="artifact">
     <eClassifiers xsi:type="ecore:EClass" name="Artifact" eSuperTypes="#//INamable #//artifact/IPropertyable"/>
@@ -81,19 +85,22 @@
           eType="#//artifact/Sentence" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ITextBodyEl" abstract="true" interface="true"/>
-    <eClassifiers xsi:type="ecore:EClass" name="Sentence" eSuperTypes="#//IDataComponent">
+    <eClassifiers xsi:type="ecore:EClass" name="Sentence" eSuperTypes="#//IDataComponent #//IContainable">
       <eStructuralFeatures xsi:type="ecore:EReference" name="token" upperBound="-1"
           eType="#//artifact/Token" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Token" abstract="true" eSuperTypes="#//IDataComponent"/>
     <eClassifiers xsi:type="ecore:EClass" name="Word" eSuperTypes="#//artifact/Token">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="word" eType="#//dictionary/Word"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Number" eSuperTypes="#//artifact/Token">
       <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//IAtomic"
           containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="NamedIdentity" eSuperTypes="#//artifact/Token"/>
+    <eClassifiers xsi:type="ecore:EClass" name="NamedIdentity" eSuperTypes="#//artifact/Token">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="IPropertyable" abstract="true" interface="true">
       <eStructuralFeatures xsi:type="ecore:EReference" name="property" upperBound="-1"
           eType="#//Property" containment="true"/>
@@ -102,9 +109,111 @@
         interface="true" eSuperTypes="#//artifact/IPropertyable #//IDataComponent"/>
   </eSubpackages>
   <eSubpackages name="infrastructure" nsURI="http://www.xixum.org/semantics/infrastructure"
-      nsPrefix="infrastructure"/>
-  <eSubpackages name="context" nsURI="http://www.xixum.org/semantics/context" nsPrefix="context"/>
+      nsPrefix="infrastructure">
+    <eClassifiers xsi:type="ecore:EClass" name="Device" eSuperTypes="#//infrastructure/IInfrastructureEl">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="subdir" upperBound="-1"
+          eType="#//infrastructure/ISubDir" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="PathEl" eSuperTypes="#//infrastructure/ISubDir">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="isubdir" upperBound="-1"
+          eType="#//infrastructure/ISubDir" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Domain" eSuperTypes="#//infrastructure/IInfrastructureEl">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="subdir" upperBound="-1"
+          eType="#//infrastructure/ISubDir" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ISubDir" abstract="true" interface="true"
+        eSuperTypes="#//infrastructure/IInfrastructureEl"/>
+    <eClassifiers xsi:type="ecore:EClass" name="IInfrastructureEl" abstract="true"
+        interface="true" eSuperTypes="#//INamable"/>
+  </eSubpackages>
+  <eSubpackages name="context" nsURI="http://www.xixum.org/semantics/context" nsPrefix="context">
+    <eClassifiers xsi:type="ecore:EClass" name="ContextRoot" eSuperTypes="#//context/IContextEl">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="entity" upperBound="-1"
+          eType="#//context/Entity" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="event" upperBound="-1"
+          eType="#//context/Event" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="time" upperBound="-1"
+          eType="#//context/Time" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="relation" upperBound="-1"
+          eType="#//context/Relation" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Entity" eSuperTypes="#//context/IContextEl">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="state" upperBound="-1"
+          eType="#//context/State" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="command" eType="#//context/Relation"
+          eOpposite="#//context/Relation/active_entity"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="operation" eType="#//context/Relation"
+          eOpposite="#//context/Relation/passive_entity"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Event" eSuperTypes="#//context/IContextEl">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="next" eType="#//context/Event"
+          eOpposite="#//context/Event/previous"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="previous" eType="#//context/Event"
+          eOpposite="#//context/Event/next"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="#//context/State"
+          eOpposite="#//context/State/event"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="time" eType="#//context/Time"
+          eOpposite="#//context/Time/event"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="State" eSuperTypes="#//context/IContextEl">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="event" eType="#//context/Event"
+          eOpposite="#//context/Event/state"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Time" abstract="true" eSuperTypes="#//context/IContextEl #//context/IChronological">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="event" eType="#//context/Event"
+          eOpposite="#//context/Event/time"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="AbsTime" eSuperTypes="#//context/Time"/>
+    <eClassifiers xsi:type="ecore:EClass" name="RelativeTime" eSuperTypes="#//context/Time"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Relation" eSuperTypes="#//context/IContextEl">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="active_entity" eType="#//context/Entity"
+          eOpposite="#//context/Entity/command"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="passive_entity" eType="#//context/Entity"
+          eOpposite="#//context/Entity/operation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="IContextEl" abstract="true" interface="true"
+        eSuperTypes="#//INamable"/>
+    <eClassifiers xsi:type="ecore:EClass" name="IChronological" abstract="true" interface="true">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="after" eType="#//context/IChronological"
+          eOpposite="#//context/IChronological/before"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="before" eType="#//context/IChronological"
+          eOpposite="#//context/IChronological/after"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="synchronous" eType="#//context/IChronological"/>
+    </eClassifiers>
+  </eSubpackages>
   <eSubpackages name="dictionary" nsURI="http://www.xixum.org/semantics/dictionary"
-      nsPrefix="dictionary"/>
-  <eSubpackages name="ruleset" nsURI="http://www.xixum.org/semantics/ruleset" nsPrefix="ruleset"/>
+      nsPrefix="dictionary">
+    <eClassifiers xsi:type="ecore:EClass" name="DictionaryRoot" eSuperTypes="#//dictionary/IDictionaryEl">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="word" upperBound="-1"
+          eType="#//dictionary/Word" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="wordclass" upperBound="-1"
+          eType="#//dictionary/WordClass" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Word" eSuperTypes="#//dictionary/IDictionaryEl">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="ofType" upperBound="-1"
+          eType="#//dictionary/WordClass"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="baseform" eType="#//dictionary/Word"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="stem" upperBound="-1"
+          eType="#//dictionary/Stem" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="WordClass" eSuperTypes="#//dictionary/IDictionaryEl"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Stem" eSuperTypes="#//dictionary/IDictionaryEl"/>
+    <eClassifiers xsi:type="ecore:EClass" name="IDictionaryEl" abstract="true" interface="true"
+        eSuperTypes="#//INamable"/>
+  </eSubpackages>
+  <eSubpackages name="ruleset" nsURI="http://www.xixum.org/semantics/ruleset" nsPrefix="ruleset">
+    <eClassifiers xsi:type="ecore:EClass" name="RuleRoot" eSuperTypes="#//ruleset/IRuleEl">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="token" upperBound="-1"
+          eType="#//ruleset/Token" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="command" upperBound="-1"
+          eType="#//ruleset/Command" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Token" eSuperTypes="#//ruleset/IRuleEl">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Command" eSuperTypes="#//ruleset/IRuleEl"/>
+    <eClassifiers xsi:type="ecore:EClass" name="IRuleEl" abstract="true" interface="true"
+        eSuperTypes="#//INamable"/>
+  </eSubpackages>
 </ecore:EPackage>
