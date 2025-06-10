@@ -177,3 +177,4 @@ files
 startupbackend.sh
 startupfrontend.sh
 workspace/
+backend/bin/
