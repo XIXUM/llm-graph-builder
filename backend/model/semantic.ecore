@@ -46,7 +46,10 @@
       eSuperTypes="#//IAggregated"/>
   <eSubpackages name="artifact" nsURI="http://www.xixum.org/semantics/artifact" nsPrefix="artifact">
     <eClassifiers xsi:type="ecore:EClass" name="Artifact" eSuperTypes="#//INamable #//artifact/IPropertyable"/>
-    <eClassifiers xsi:type="ecore:EClass" name="Document" eSuperTypes="#//artifact/Artifact"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Document" eSuperTypes="#//artifact/Artifact">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="kg_reference" eType="#//knowledgegraph/Document"
+          eOpposite="#//knowledgegraph/Document/context_ref"/>
+    </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="TextDocument" eSuperTypes="#//artifact/Document">
       <eStructuralFeatures xsi:type="ecore:EReference" name="blockElement" upperBound="-1"
           eType="#//artifact/ITextBodyEl" containment="true"/>
@@ -84,7 +87,10 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="sentence" upperBound="-1"
           eType="#//artifact/Sentence" containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="ITextBodyEl" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="ITextBodyEl" abstract="true" interface="true">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="chunk" eType="#//knowledgegraph/Chunk"
+          eOpposite="#//knowledgegraph/Chunk/context_ref"/>
+    </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Sentence" eSuperTypes="#//IDataComponent #//IContainable">
       <eStructuralFeatures xsi:type="ecore:EReference" name="token" upperBound="-1"
           eType="#//artifact/Token" containment="true"/>
@@ -110,15 +116,17 @@
   </eSubpackages>
   <eSubpackages name="infrastructure" nsURI="http://www.xixum.org/semantics/infrastructure"
       nsPrefix="infrastructure">
-    <eClassifiers xsi:type="ecore:EClass" name="Device" eSuperTypes="#//infrastructure/IInfrastructureEl">
+    <eClassifiers xsi:type="ecore:EClass" name="Device" eSuperTypes="#//infrastructure/IInfrastructureEl #//infrastructure/ILocalLocation">
       <eStructuralFeatures xsi:type="ecore:EReference" name="subdir" upperBound="-1"
           eType="#//infrastructure/ISubDir" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="PathEl" eSuperTypes="#//infrastructure/ISubDir">
       <eStructuralFeatures xsi:type="ecore:EReference" name="isubdir" upperBound="-1"
           eType="#//infrastructure/ISubDir" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="artifact" upperBound="-1"
+          eType="#//artifact/Artifact" containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="Domain" eSuperTypes="#//infrastructure/IInfrastructureEl">
+    <eClassifiers xsi:type="ecore:EClass" name="Domain" eSuperTypes="#//infrastructure/ILocation #//infrastructure/IWebLocation">
       <eStructuralFeatures xsi:type="ecore:EReference" name="subdir" upperBound="-1"
           eType="#//infrastructure/ISubDir" containment="true"/>
     </eClassifiers>
@@ -126,6 +134,15 @@
         eSuperTypes="#//infrastructure/IInfrastructureEl"/>
     <eClassifiers xsi:type="ecore:EClass" name="IInfrastructureEl" abstract="true"
         interface="true" eSuperTypes="#//INamable"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Environment">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="location" upperBound="-1"
+          eType="#//infrastructure/ILocation" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ILocation" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="ILocalLocation" abstract="true" interface="true"
+        eSuperTypes="#//infrastructure/ILocation"/>
+    <eClassifiers xsi:type="ecore:EClass" name="IWebLocation" abstract="true" interface="true"
+        eSuperTypes="#//infrastructure/ILocation"/>
   </eSubpackages>
   <eSubpackages name="context" nsURI="http://www.xixum.org/semantics/context" nsPrefix="context">
     <eClassifiers xsi:type="ecore:EClass" name="ContextRoot" eSuperTypes="#//context/IContextEl">
@@ -137,14 +154,16 @@
           eType="#//context/Time" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="relation" upperBound="-1"
           eType="#//context/Relation" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="prototype" upperBound="-1"
+          eType="#//context/Prototype" containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="Entity" eSuperTypes="#//context/IContextEl">
+    <eClassifiers xsi:type="ecore:EClass" name="Entity" abstract="true" eSuperTypes="#//context/IContextEl #//context/IRefferable">
       <eStructuralFeatures xsi:type="ecore:EReference" name="state" upperBound="-1"
           eType="#//context/State" containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="command" eType="#//context/Relation"
-          eOpposite="#//context/Relation/active_entity"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="operation" eType="#//context/Relation"
-          eOpposite="#//context/Relation/passive_entity"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="kg_entity" eType="#//knowledgegraph/Entity"
+          eOpposite="#//knowledgegraph/Entity/context_ref"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="prototype" eType="#//context/Prototype"
+          eOpposite="#//context/Prototype/entity"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Event" eSuperTypes="#//context/IContextEl">
       <eStructuralFeatures xsi:type="ecore:EReference" name="next" eType="#//context/Event"
@@ -167,10 +186,12 @@
     <eClassifiers xsi:type="ecore:EClass" name="AbsTime" eSuperTypes="#//context/Time"/>
     <eClassifiers xsi:type="ecore:EClass" name="RelativeTime" eSuperTypes="#//context/Time"/>
     <eClassifiers xsi:type="ecore:EClass" name="Relation" eSuperTypes="#//context/IContextEl">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="active_entity" eType="#//context/Entity"
-          eOpposite="#//context/Entity/command"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="passive_entity" eType="#//context/Entity"
-          eOpposite="#//context/Entity/operation"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="active_entity" eType="#//context/IRefferable"
+          eOpposite="#//context/IRefferable/command"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="passive_entity" eType="#//context/IRefferable"
+          eOpposite="#//context/IRefferable/operation"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="kg_relation" eType="#//knowledgegraph/Relation"
+          eOpposite="#//knowledgegraph/Relation/context_ref"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="IContextEl" abstract="true" interface="true"
         eSuperTypes="#//INamable"/>
@@ -180,6 +201,22 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="before" eType="#//context/IChronological"
           eOpposite="#//context/IChronological/after"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="synchronous" eType="#//context/IChronological"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="PysicalE" eSuperTypes="#//context/Entity"/>
+    <eClassifiers xsi:type="ecore:EClass" name="VirtualE" eSuperTypes="#//context/Entity"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Prototype" eSuperTypes="#//context/IRefferable">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="abstract" eType="#//context/Prototype"
+          eOpposite="#//context/Prototype/specification"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="specification" upperBound="-1"
+          eType="#//context/Prototype" eOpposite="#//context/Prototype/abstract"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="entity" eType="#//context/Entity"
+          eOpposite="#//context/Entity/prototype"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="IRefferable" abstract="true" interface="true">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="operation" eType="#//context/Relation"
+          eOpposite="#//context/Relation/passive_entity"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="command" eType="#//context/Relation"
+          eOpposite="#//context/Relation/active_entity"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="dictionary" nsURI="http://www.xixum.org/semantics/dictionary"
@@ -215,5 +252,43 @@
     <eClassifiers xsi:type="ecore:EClass" name="Command" eSuperTypes="#//ruleset/IRuleEl"/>
     <eClassifiers xsi:type="ecore:EClass" name="IRuleEl" abstract="true" interface="true"
         eSuperTypes="#//INamable"/>
+  </eSubpackages>
+  <eSubpackages name="knowledgegraph">
+    <eClassifiers xsi:type="ecore:EClass" name="Document" eSuperTypes="#//knowledgegraph/INode">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="chunk" upperBound="-1"
+          eType="#//knowledgegraph/Chunk" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="context_ref" eType="#//artifact/Document"
+          eOpposite="#//artifact/Document/kg_reference"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Chunk" eSuperTypes="#//knowledgegraph/INode">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="entity" upperBound="-1"
+          eType="#//knowledgegraph/Entity" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="context_ref" eType="#//artifact/ITextBodyEl"
+          eOpposite="#//artifact/ITextBodyEl/chunk"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Entity" eSuperTypes="#//knowledgegraph/INode">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="context_ref" eType="#//context/Entity"
+          eOpposite="#//context/Entity/kg_entity"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="KGroot">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="document" upperBound="-1"
+          eType="#//knowledgegraph/Document" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="relation" upperBound="-1"
+          eType="#//knowledgegraph/Relation" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Relation">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="target_node" eType="#//knowledgegraph/INode"
+          eOpposite="#//knowledgegraph/INode/in_relation"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="source_node" eType="#//knowledgegraph/INode"
+          eOpposite="#//knowledgegraph/INode/out_relation"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="context_ref" eType="#//context/Relation"
+          eOpposite="#//context/Relation/kg_relation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="INode" abstract="true" interface="true">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="in_relation" eType="#//knowledgegraph/Relation"
+          eOpposite="#//knowledgegraph/Relation/target_node"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="out_relation" eType="#//knowledgegraph/Relation"
+          eOpposite="#//knowledgegraph/Relation/source_node"/>
+    </eClassifiers>
   </eSubpackages>
 </ecore:EPackage>

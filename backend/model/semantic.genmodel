@@ -47,7 +47,10 @@
     <genClasses image="false" ecoreClass="semantic.ecore#//IContainable"/>
     <nestedGenPackages prefix="Artifact" disposableProviderFactory="true" ecorePackage="semantic.ecore#//artifact">
       <genClasses ecoreClass="semantic.ecore#//artifact/Artifact"/>
-      <genClasses ecoreClass="semantic.ecore#//artifact/Document"/>
+      <genClasses ecoreClass="semantic.ecore#//artifact/Document">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//artifact/Document/kg_reference"/>
+      </genClasses>
       <genClasses ecoreClass="semantic.ecore#//artifact/TextDocument">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/TextDocument/blockElement"/>
       </genClasses>
@@ -77,7 +80,10 @@
       <genClasses ecoreClass="semantic.ecore#//artifact/Heading">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/Heading/sentence"/>
       </genClasses>
-      <genClasses image="false" ecoreClass="semantic.ecore#//artifact/ITextBodyEl"/>
+      <genClasses image="false" ecoreClass="semantic.ecore#//artifact/ITextBodyEl">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//artifact/ITextBodyEl/chunk"/>
+      </genClasses>
       <genClasses ecoreClass="semantic.ecore#//artifact/Sentence">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/Sentence/token"/>
       </genClasses>
@@ -104,12 +110,19 @@
       </genClasses>
       <genClasses ecoreClass="semantic.ecore#//infrastructure/PathEl">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//infrastructure/PathEl/isubdir"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//infrastructure/PathEl/artifact"/>
       </genClasses>
       <genClasses ecoreClass="semantic.ecore#//infrastructure/Domain">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//infrastructure/Domain/subdir"/>
       </genClasses>
       <genClasses image="false" ecoreClass="semantic.ecore#//infrastructure/ISubDir"/>
       <genClasses image="false" ecoreClass="semantic.ecore#//infrastructure/IInfrastructureEl"/>
+      <genClasses ecoreClass="semantic.ecore#//infrastructure/Environment">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//infrastructure/Environment/location"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="semantic.ecore#//infrastructure/ILocation"/>
+      <genClasses image="false" ecoreClass="semantic.ecore#//infrastructure/ILocalLocation"/>
+      <genClasses image="false" ecoreClass="semantic.ecore#//infrastructure/IWebLocation"/>
     </nestedGenPackages>
     <nestedGenPackages prefix="Context" disposableProviderFactory="true" ecorePackage="semantic.ecore#//context">
       <genClasses ecoreClass="semantic.ecore#//context/ContextRoot">
@@ -117,13 +130,14 @@
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//context/ContextRoot/event"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//context/ContextRoot/time"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//context/ContextRoot/relation"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//context/ContextRoot/prototype"/>
       </genClasses>
       <genClasses ecoreClass="semantic.ecore#//context/Entity">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//context/Entity/state"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference semantic.ecore#//context/Entity/command"/>
+            ecoreFeature="ecore:EReference semantic.ecore#//context/Entity/kg_entity"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference semantic.ecore#//context/Entity/operation"/>
+            ecoreFeature="ecore:EReference semantic.ecore#//context/Entity/prototype"/>
       </genClasses>
       <genClasses ecoreClass="semantic.ecore#//context/Event">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
@@ -150,6 +164,8 @@
             ecoreFeature="ecore:EReference semantic.ecore#//context/Relation/active_entity"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference semantic.ecore#//context/Relation/passive_entity"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//context/Relation/kg_relation"/>
       </genClasses>
       <genClasses image="false" ecoreClass="semantic.ecore#//context/IContextEl"/>
       <genClasses image="false" ecoreClass="semantic.ecore#//context/IChronological">
@@ -159,6 +175,22 @@
             ecoreFeature="ecore:EReference semantic.ecore#//context/IChronological/before"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference semantic.ecore#//context/IChronological/synchronous"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//context/PysicalE"/>
+      <genClasses ecoreClass="semantic.ecore#//context/VirtualE"/>
+      <genClasses ecoreClass="semantic.ecore#//context/Prototype">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//context/Prototype/abstract"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//context/Prototype/specification"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//context/Prototype/entity"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="semantic.ecore#//context/IRefferable">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//context/IRefferable/operation"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//context/IRefferable/command"/>
       </genClasses>
     </nestedGenPackages>
     <nestedGenPackages prefix="Dictionary" disposableProviderFactory="true" ecorePackage="semantic.ecore#//dictionary">
@@ -187,6 +219,40 @@
       </genClasses>
       <genClasses ecoreClass="semantic.ecore#//ruleset/Command"/>
       <genClasses image="false" ecoreClass="semantic.ecore#//ruleset/IRuleEl"/>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="NewPackage6" disposableProviderFactory="true" ecorePackage="semantic.ecore#//knowledgegraph">
+      <genClasses ecoreClass="semantic.ecore#//knowledgegraph/Document">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/Document/chunk"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/Document/context_ref"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//knowledgegraph/Chunk">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/Chunk/entity"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/Chunk/context_ref"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//knowledgegraph/Entity">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/Entity/context_ref"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//knowledgegraph/KGroot">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/KGroot/document"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/KGroot/relation"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//knowledgegraph/Relation">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/Relation/target_node"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/Relation/source_node"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/Relation/context_ref"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="semantic.ecore#//knowledgegraph/INode">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/INode/in_relation"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/INode/out_relation"/>
+      </genClasses>
     </nestedGenPackages>
   </genPackages>
 </genmodel:GenModel>
