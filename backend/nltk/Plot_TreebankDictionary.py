@@ -3,8 +3,10 @@ from datetime import datetime
 import nltk
 import re
 from typing import List
-from Neo4jAccess import Neo4jDictionaryClient
+from neomodel import StructuredNode, StringProperty, IntegerProperty
+from Neo4jAccess import Neo4jDatabaseClient
 from pathlib import Path
+import inspect
 
 # Ensure NLTK sentence tokenizer is available
 nltk.download('punkt')
@@ -62,14 +64,48 @@ def hasChapterNum(text):
     Returns: boolean
 
     """
-    re.compile(r"^(\d+\.)?")
-    return bool(re.match(r"^(\d+\.)?", text))
+    pattern = re.compile(r"^(\d+((\.\d+)+|\.))")
+    return bool(pattern.match(text))
+
+def creationStamp() -> str:
+    return f"created: {apoc_timestamp()}, createdby: '{get_frame_by_index(2)}'"
+
+def set_creationStamp(node : str) -> str:
+    return f"{node}.created = '{apoc_timestamp()}', {node}.createdby = '{get_frame_by_index(2)}'"
+
+def apoc_timestamp() -> str:
+    return f"apoc.date.toISO8601(datetime().epochMillis, \"ms\")"
+
+def get_current_method_name():
+    """
+    Returns the name of the current method or function.
+    """
+    return inspect.currentframe().f_back.f_code.co_name
+
+def get_frame_by_index(index):
+    """
+    Retrieves the method or function name at a specific index in the call stack.
+
+    :param index: The number of frames to look back (0 = current frame).
+    :return: Name of the method or function at the specified frame, or None if out of range.
+    """
+    frame = inspect.currentframe()
+    try:
+        # Navigate back "index" frames in the call stack
+        for _ in range(index):
+            if frame is None:
+                return None  # If we run out of frames, return None
+            frame = frame.f_back
+        return frame.f_code.co_name if frame else None
+    finally:
+        # Avoid reference cycles by explicitly deleting the current frame (best practice)
+        del frame
 
 class TextStructure:
     def __init__(self, document: TextDocument):
         self.document = document
         self.structure = self._parse_text()
-        self.neo4j_client = Neo4jDictionaryClient()
+        self.neo4j_context_client = Neo4jDatabaseClient(database="context", password="test1234")
 
     def _parse_text(self):
         """
@@ -115,6 +151,7 @@ class TextStructure:
             return (
                 text.isupper()
                 or hasChapterNum(text)
+                #TODO: 06.06.25 test pattern. Should look for single sentence instead
                 or len(text.split()) <= 5
             )
         return False
@@ -124,12 +161,14 @@ class TextStructure:
 
     def print_structure(self):
         self._createDocument()
-        for section, i in self.structure:
-            self._createSection(section, i)
+        for sec, section in enumerate(self.structure):
+            self._createSection(section, sec)
             print(f"\n=== Caption: {section['caption']} ===")
-            for i, paragraph in enumerate(section['paragraphs'], 1):
-                print(f"  Paragraph {i}:")
-                for sentence in paragraph:
+            for p, paragraph in enumerate(section['paragraphs']):
+                self._createParagraphs(paragraph, p, sec)
+                print(f"  Paragraph {p}:")
+                for ss, sentence in enumerate(paragraph):
+                    self._createSentence(sentence, ss, p)
                     print(f"    - {sentence}")
 
     def _createDocument(self):
@@ -138,11 +177,14 @@ class TextStructure:
         Returns:
             record of the document node
         """
+        #TODO: 05.06.2025 requires to add infrastructure for context
+        vars = ["d"]
         queryStr = f"""
-        MERGE (d:document {{name: {self.document.file_path.name}, {creationStamp})
-        RETURN d
+        MERGE (d:document {{name: \"{self.document.file_path.name}\"}})
+        ON CREATE SET {set_creationStamp('d')}
+        RETURN {", ".join(vars)}
         """
-        result = self.neo4j_client.run_query(queryStr)
+        result = self.neo4j_context_client.run_query(queryStr)
         return result
 
     def _createSection(self, section, i ):
@@ -155,26 +197,103 @@ class TextStructure:
         Returns: record of the section node
 
         """
-        #TODO: requires to add infrastructure
+        vars = ["d", "s", "h"]
         queryStr = f"""
-        MATCH (d:document) WHERE d.name = {self.document.file_path.name}
-        MERGE (s:section {{order: {i}, {self.creationStamp()}}})
-        MERGE (h:heading {{caption: "{section['caption']}"}})
-        ON CREATE SET {self.set_creationStamp('h')}
-        MERGE (s)-[:has_heading]->(h)
-        RETURN s
+        MATCH (d:document) WHERE d.name = '{self.document.file_path.name}'
         """
-        result = self.neo4j_client.run_query(queryStr)
+        if i > 0:
+            vars.append("pr")
+            queryStr += f"""
+            MATCH (d)-[:has_section]->(pr) WHERE pr.order = {i-1}
+            """
+        queryStr += f"""
+        MERGE (s:section {{order: {i}}})
+        ON CREATE SET {set_creationStamp('s')}
+        MERGE (h:heading {{caption: "{section['caption']}"}})
+        ON CREATE SET {set_creationStamp('h')}
+        MERGE (s)-[:has_heading]->(h)
+        MERGE (d)-[:has_section]->(s)
+        """
+        if i > 0:
+            queryStr += f"""
+            MERGE (pr)-[:successor]->(s)
+            """
+        queryStr += f"""
+        RETURN {", ".join(vars)}
+        """
+        result = self.neo4j_context_client.run_query(queryStr)
         return result
 
-    def creationStamp(self):
-        return f"created: '{self.apoc_timestamp()}', createdby: '{__name__}'"
+    def _createParagraphs(self, paragraph, para_num, sec_num):
+        """
+        method that creates a paragraph node of label paragraph in the graph database neo4j
+        Args:
+            paragraph:
+            i:
 
-    def set_creationStamp(self, node):
-        return f"h.created = '{self.apoc_timestamp()}', h.createdby = '{__name__}'"
+        Returns:
 
-    def apoc_timestamp(self):
-        return f"apoc.date.toISO8601(datetime().epochMillis, \"ms\")"
+        """
+        vars = ["s", "p"]
+        queryStr = f"""
+        MATCH (s:section) WHERE s.order = {sec_num}
+        """
+        if para_num > 0:
+            vars.append("op")
+            queryStr +=f"""
+            MATCH (s)-[:has_paragraph]->(op) WHERE op.order = {para_num-1}
+            """
+        queryStr +=f"""
+        MERGE (p:paragraph {{order: {para_num}}})
+        ON CREATE SET {set_creationStamp('p')}
+        MERGE (s)-[:has_paragraph]->(p)
+        """
+        if para_num > 0:
+            queryStr+= f"""
+            MERGE (op)-[:successor]->(p)
+            """
+        queryStr +=f"""
+        RETURN {", ".join(vars)}
+        """
+        result = self.neo4j_context_client.run_query(queryStr)
+        return result
+
+    def _createSentence(self, sentence, sent_num, para_num):
+        """
+        creates the sentence representation
+        Args:
+            sentence:
+            para_num:
+            sent_num:
+
+        Returns:
+
+        """
+
+        vars = ["p", "ss"]
+        queryStr = f"""
+        MATCH (p:paragraph) WHERE p.order = {para_num}
+        """
+        if sent_num > 0:
+            vars.append("pr")
+            queryStr += f"""
+            MATCH (p)-[:has_sentence]->(pr) WHERE pr.order = {sent_num - 1}
+            """
+        queryStr += f"""
+        MERGE (ss:sentence {{order: {sent_num}, content: \"{sentence}\"}})
+        ON CREATE SET {set_creationStamp('ss')}
+        MERGE (p)-[:has_sentence]->(ss)
+        """
+        if sent_num > 0:
+            queryStr += f"""
+            MERGE (pr)-[:successor]->(ss)
+            """
+        queryStr += f"""
+        RETURN {", ".join(vars)}
+        """
+        result = self.neo4j_context_client.run_query(queryStr)
+        return result
+
 
 # Example usage
 if __name__ == "__main__":

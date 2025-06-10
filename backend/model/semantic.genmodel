@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel"
+    modelDirectory="/org.xixum.cognitive.backend/src-gen" creationIcons="false"
+    editDirectory="/org.xixum.cognitive.backend.edit/src-gen" editorDirectory="/org.xixum.cognitive.backend.editor/src-gen"
+    modelPluginID="org.xixum.cognitive.backend" modelName="Semantic" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    codeFormatting="true" importerID="org.eclipse.emf.importer.ecore" complianceLevel="21.0"
+    copyrightFields="false" operationReflection="true" importOrganizing="true">
+  <foreignModel>semantic.ecore</foreignModel>
+  <testsDirectory xsi:nil="true"/>
+  <genPackages prefix="Semantics" disposableProviderFactory="true" ecorePackage="semantic.ecore#/">
+    <nestedGenPackages prefix="Artifact" disposableProviderFactory="true" ecorePackage="semantic.ecore#//artifact">
+      <genClasses ecoreClass="semantic.ecore#//artifact/Artifact"/>
+      <genClasses ecoreClass="semantic.ecore#//artifact/Document"/>
+      <genClasses ecoreClass="semantic.ecore#//artifact/TextDocument"/>
+      <genClasses ecoreClass="semantic.ecore#//artifact/SpreadSheet"/>
+      <genClasses ecoreClass="semantic.ecore#//artifact/RichTextDocument"/>
+      <genClasses ecoreClass="semantic.ecore#//artifact/Sheet"/>
+      <genClasses ecoreClass="semantic.ecore#//artifact/Table"/>
+      <genClasses ecoreClass="semantic.ecore#//artifact/Row"/>
+      <genClasses ecoreClass="semantic.ecore#//artifact/Cell">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/Cell/column"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/Cell/rowSpan"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/Cell/colSpan"/>
+      </genClasses>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Infrastructure" disposableProviderFactory="true" ecorePackage="semantic.ecore#//infrastructure"/>
+    <nestedGenPackages prefix="Context" disposableProviderFactory="true" ecorePackage="semantic.ecore#//context"/>
+    <nestedGenPackages prefix="Dictionary" disposableProviderFactory="true" ecorePackage="semantic.ecore#//dictionary"/>
+    <nestedGenPackages prefix="Ruleset" disposableProviderFactory="true" ecorePackage="semantic.ecore#//ruleset"/>
+  </genPackages>
+</genmodel:GenModel>

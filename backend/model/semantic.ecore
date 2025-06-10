@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="semantics" nsURI="http://www.xixum.org/semantics" nsPrefix="semantics">
+  <eSubpackages name="artifact" nsURI="http://www.xixum.org/semantics/artifact" nsPrefix="artifact">
+    <eClassifiers xsi:type="ecore:EClass" name="Artifact"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Document" eSuperTypes="#//artifact/Artifact"/>
+    <eClassifiers xsi:type="ecore:EClass" name="TextDocument" eSuperTypes="#//artifact/Document"/>
+    <eClassifiers xsi:type="ecore:EClass" name="SpreadSheet" eSuperTypes="#//artifact/Document"/>
+    <eClassifiers xsi:type="ecore:EClass" name="RichTextDocument" eSuperTypes="#//artifact/TextDocument"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Sheet"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Table"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Row"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Cell">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="column" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="rowSpan" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="colSpan" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="infrastructure" nsURI="http://www.xixum.org/semantics/infrastructure"
+      nsPrefix="infrastructure"/>
+  <eSubpackages name="context" nsURI="http://www.xixum.org/semantics/context" nsPrefix="context"/>
+  <eSubpackages name="dictionary" nsURI="http://www.xixum.org/semantics/dictionary"
+      nsPrefix="dictionary"/>
+  <eSubpackages name="ruleset" nsURI="http://www.xixum.org/semantics/ruleset" nsPrefix="ruleset"/>
+</ecore:EPackage>
