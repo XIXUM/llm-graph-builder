@@ -9,20 +9,87 @@
   <foreignModel>semantic.ecore</foreignModel>
   <testsDirectory xsi:nil="true"/>
   <genPackages prefix="Semantics" disposableProviderFactory="true" ecorePackage="semantic.ecore#/">
+    <genClasses image="false" ecoreClass="semantic.ecore#//INamable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//INamable/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//INamable/index"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="semantic.ecore#//IDataComponent"/>
+    <genClasses ecoreClass="semantic.ecore#//Property"/>
+    <genClasses image="false" ecoreClass="semantic.ecore#//IValueComponent"/>
+    <genClasses ecoreClass="semantic.ecore#//StringProperty">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//StringProperty/value"/>
+    </genClasses>
+    <genClasses ecoreClass="semantic.ecore#//IntProperty">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//IntProperty/value"/>
+    </genClasses>
+    <genClasses ecoreClass="semantic.ecore#//FloatProperty">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//FloatProperty/value"/>
+    </genClasses>
+    <genClasses ecoreClass="semantic.ecore#//BoolProperty">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//BoolProperty/value"/>
+    </genClasses>
+    <genClasses ecoreClass="semantic.ecore#//ListProperty">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//ListProperty/entry"/>
+    </genClasses>
+    <genClasses ecoreClass="semantic.ecore#//MapProperty">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//MapProperty/entry"/>
+    </genClasses>
+    <genClasses ecoreClass="semantic.ecore#//Pair">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//Pair/key"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//Pair/value"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="semantic.ecore#//IIdentifiable"/>
+    <genClasses image="false" ecoreClass="semantic.ecore#//IAtomic"/>
+    <genClasses image="false" ecoreClass="semantic.ecore#//IAggregated"/>
+    <genClasses image="false" ecoreClass="semantic.ecore#//IIterable"/>
     <nestedGenPackages prefix="Artifact" disposableProviderFactory="true" ecorePackage="semantic.ecore#//artifact">
       <genClasses ecoreClass="semantic.ecore#//artifact/Artifact"/>
       <genClasses ecoreClass="semantic.ecore#//artifact/Document"/>
-      <genClasses ecoreClass="semantic.ecore#//artifact/TextDocument"/>
-      <genClasses ecoreClass="semantic.ecore#//artifact/SpreadSheet"/>
+      <genClasses ecoreClass="semantic.ecore#//artifact/TextDocument">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/TextDocument/blockElement"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//artifact/SpreadSheet">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/SpreadSheet/sheet"/>
+      </genClasses>
       <genClasses ecoreClass="semantic.ecore#//artifact/RichTextDocument"/>
-      <genClasses ecoreClass="semantic.ecore#//artifact/Sheet"/>
-      <genClasses ecoreClass="semantic.ecore#//artifact/Table"/>
-      <genClasses ecoreClass="semantic.ecore#//artifact/Row"/>
+      <genClasses ecoreClass="semantic.ecore#//artifact/Sheet">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/Sheet/table"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//artifact/Table">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/Table/row"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//artifact/Row">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/Row/cell"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/Row/index"/>
+      </genClasses>
       <genClasses ecoreClass="semantic.ecore#//artifact/Cell">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/Cell/column"/>
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/Cell/rowSpan"/>
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/Cell/colSpan"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/Cell/paragraph"/>
       </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//artifact/Paragraph">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/Paragraph/sentence"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//artifact/Heading">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/Heading/sentence"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="semantic.ecore#//artifact/ITextBodyEl"/>
+      <genClasses ecoreClass="semantic.ecore#//artifact/Sentence">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/Sentence/token"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//artifact/Token"/>
+      <genClasses ecoreClass="semantic.ecore#//artifact/Word">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/Word/value"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//artifact/Number">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/Number/value"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//artifact/NamedIdentity"/>
+      <genClasses image="false" ecoreClass="semantic.ecore#//artifact/IPropertyable">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/IPropertyable/property"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="semantic.ecore#//artifact/SpreatSheetComponent"/>
     </nestedGenPackages>
     <nestedGenPackages prefix="Infrastructure" disposableProviderFactory="true" ecorePackage="semantic.ecore#//infrastructure"/>
     <nestedGenPackages prefix="Context" disposableProviderFactory="true" ecorePackage="semantic.ecore#//context"/>

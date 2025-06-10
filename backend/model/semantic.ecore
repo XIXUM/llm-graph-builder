@@ -1,20 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="semantics" nsURI="http://www.xixum.org/semantics" nsPrefix="semantics">
+  <eClassifiers xsi:type="ecore:EClass" name="INamable" abstract="true" interface="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="index" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IDataComponent" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Property" abstract="true" eSuperTypes="#//IValueComponent"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IValueComponent" abstract="true" interface="true"
+      eSuperTypes="#//INamable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StringProperty" eSuperTypes="#//Property #//IAggregated">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IntProperty" eSuperTypes="#//Property #//IAtomic">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FloatProperty" eSuperTypes="#//Property #//IAtomic">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BoolProperty" eSuperTypes="#//Property #//IAtomic">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ListProperty" eSuperTypes="#//Property #//IIterable">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="entry" upperBound="-1"
+        eType="#//Property" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MapProperty" eSuperTypes="#//Property #//IIterable">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="entry" upperBound="-1"
+        eType="#//Pair" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Pair">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="key" eType="#//Property"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Property"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IIdentifiable" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IAtomic" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IAggregated" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IIterable" abstract="true" interface="true"
+      eSuperTypes="#//IAggregated"/>
   <eSubpackages name="artifact" nsURI="http://www.xixum.org/semantics/artifact" nsPrefix="artifact">
-    <eClassifiers xsi:type="ecore:EClass" name="Artifact"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Artifact" eSuperTypes="#//INamable #//artifact/IPropertyable"/>
     <eClassifiers xsi:type="ecore:EClass" name="Document" eSuperTypes="#//artifact/Artifact"/>
-    <eClassifiers xsi:type="ecore:EClass" name="TextDocument" eSuperTypes="#//artifact/Document"/>
-    <eClassifiers xsi:type="ecore:EClass" name="SpreadSheet" eSuperTypes="#//artifact/Document"/>
+    <eClassifiers xsi:type="ecore:EClass" name="TextDocument" eSuperTypes="#//artifact/Document">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="blockElement" upperBound="-1"
+          eType="#//artifact/ITextBodyEl" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SpreadSheet" eSuperTypes="#//artifact/Document">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="sheet" upperBound="-1"
+          eType="#//artifact/Sheet" containment="true"/>
+    </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="RichTextDocument" eSuperTypes="#//artifact/TextDocument"/>
-    <eClassifiers xsi:type="ecore:EClass" name="Sheet"/>
-    <eClassifiers xsi:type="ecore:EClass" name="Table"/>
-    <eClassifiers xsi:type="ecore:EClass" name="Row"/>
-    <eClassifiers xsi:type="ecore:EClass" name="Cell">
+    <eClassifiers xsi:type="ecore:EClass" name="Sheet" eSuperTypes="#//IDataComponent #//artifact/SpreatSheetComponent">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="table" upperBound="-1"
+          eType="#//artifact/Table" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Table" eSuperTypes="#//IDataComponent #//artifact/SpreatSheetComponent">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="row" upperBound="-1"
+          eType="#//artifact/Row" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Row" eSuperTypes="#//IDataComponent #//artifact/SpreatSheetComponent">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="cell" upperBound="-1"
+          eType="#//artifact/Cell" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="index" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Cell" eSuperTypes="#//IDataComponent #//artifact/SpreatSheetComponent">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="column" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="rowSpan" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="colSpan" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="paragraph" upperBound="-1"
+          eType="#//artifact/Paragraph" containment="true"/>
     </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Paragraph" eSuperTypes="#//artifact/ITextBodyEl #//IIdentifiable #//IDataComponent">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="sentence" upperBound="-1"
+          eType="#//artifact/Sentence" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Heading" eSuperTypes="#//artifact/ITextBodyEl #//IIdentifiable #//IDataComponent">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="sentence" upperBound="-1"
+          eType="#//artifact/Sentence" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ITextBodyEl" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Sentence" eSuperTypes="#//IDataComponent">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="token" upperBound="-1"
+          eType="#//artifact/Token" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Token" abstract="true" eSuperTypes="#//IDataComponent"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Word" eSuperTypes="#//artifact/Token">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Number" eSuperTypes="#//artifact/Token">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//IAtomic"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="NamedIdentity" eSuperTypes="#//artifact/Token"/>
+    <eClassifiers xsi:type="ecore:EClass" name="IPropertyable" abstract="true" interface="true">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="property" upperBound="-1"
+          eType="#//Property" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SpreatSheetComponent" abstract="true"
+        interface="true" eSuperTypes="#//artifact/IPropertyable #//IDataComponent"/>
   </eSubpackages>
   <eSubpackages name="infrastructure" nsURI="http://www.xixum.org/semantics/infrastructure"
       nsPrefix="infrastructure"/>
