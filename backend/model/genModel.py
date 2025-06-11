@@ -1,12 +1,14 @@
 import argparse
 import logging
 from pyecore.ecore import EPackage
+import pyecore.type as xmltypes
 from pyecore.resources import ResourceSet, URI  # Correct import
 from pyecoregen.ecore import EcoreGenerator
 
 def generate_classes(ecore_path, output_dir):
     # Load Ecore model
     resource_set = ResourceSet()
+    # resource_set.metamodel_registry['http://www.eclipse.org/emf/2003/XMLType'] = XMLType
     resource = resource_set.get_resource(ecore_path)
     root_package = resource.contents[0]  # Get root EPackage
 
