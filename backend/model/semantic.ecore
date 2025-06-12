@@ -256,12 +256,21 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="token" upperBound="-1"
           eType="#//ruleset/Token" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="command" upperBound="-1"
-          eType="#//ruleset/Command" containment="true"/>
+          eType="#//ruleset/Predicate" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Token" eSuperTypes="#//ruleset/IRuleEl">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="command" eType="#//ruleset/Predicate"
+          eOpposite="#//ruleset/Predicate/activeToken"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="operation" eType="#//ruleset/Predicate"
+          eOpposite="#//ruleset/Predicate/passiveToken"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="Command" eSuperTypes="#//ruleset/IRuleEl"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Predicate" eSuperTypes="#//ruleset/IRuleEl">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="activeToken" eType="#//ruleset/Token"
+          eOpposite="#//ruleset/Token/command"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="passiveToken" eType="#//ruleset/Token"
+          eOpposite="#//ruleset/Token/operation"/>
+    </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="IRuleEl" abstract="true" interface="true"
         eSuperTypes="#//INamable"/>
   </eSubpackages>

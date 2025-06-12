@@ -226,8 +226,17 @@
       </genClasses>
       <genClasses ecoreClass="semantic.ecore#//ruleset/Token">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//ruleset/Token/type"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//ruleset/Token/command"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//ruleset/Token/operation"/>
       </genClasses>
-      <genClasses ecoreClass="semantic.ecore#//ruleset/Command"/>
+      <genClasses ecoreClass="semantic.ecore#//ruleset/Predicate">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//ruleset/Predicate/activeToken"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//ruleset/Predicate/passiveToken"/>
+      </genClasses>
       <genClasses image="false" ecoreClass="semantic.ecore#//ruleset/IRuleEl"/>
     </nestedGenPackages>
     <nestedGenPackages prefix="NewPackage6" disposableProviderFactory="true" ecorePackage="semantic.ecore#//knowledgegraph">
