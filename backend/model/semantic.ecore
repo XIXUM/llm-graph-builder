@@ -29,7 +29,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="entry" upperBound="-1"
         eType="#//Pair" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Pair">
+  <eClassifiers xsi:type="ecore:EClass" name="Pair" eSuperTypes="#//IAggregated">
     <eStructuralFeatures xsi:type="ecore:EReference" name="key" eType="#//Property"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Property"
@@ -166,16 +166,16 @@
           eType="#//context/Time" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="relation" upperBound="-1"
           eType="#//context/Relation" containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="prototype" upperBound="-1"
-          eType="#//context/Prototype" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="class" upperBound="-1"
+          eType="#//context/Class" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Entity" abstract="true" eSuperTypes="#//context/IContextEl #//context/IRefferable">
       <eStructuralFeatures xsi:type="ecore:EReference" name="state" upperBound="-1"
           eType="#//context/State" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="kg_entity" eType="#//knowledgegraph/Entity"
           eOpposite="#//knowledgegraph/Entity/context_ref"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="prototype" eType="#//context/Prototype"
-          eOpposite="#//context/Prototype/entity"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="class" eType="#//context/Class"
+          eOpposite="#//context/Class/entity"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Event" eSuperTypes="#//context/IContextEl">
       <eStructuralFeatures xsi:type="ecore:EReference" name="next" eType="#//context/Event"
@@ -216,13 +216,13 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="PysicalE" eSuperTypes="#//context/Entity"/>
     <eClassifiers xsi:type="ecore:EClass" name="VirtualE" eSuperTypes="#//context/Entity"/>
-    <eClassifiers xsi:type="ecore:EClass" name="Prototype" eSuperTypes="#//context/IRefferable">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="abstract" eType="#//context/Prototype"
-          eOpposite="#//context/Prototype/specification"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="specification" upperBound="-1"
-          eType="#//context/Prototype" eOpposite="#//context/Prototype/abstract"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Class" eSuperTypes="#//context/IRefferable">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="abstract" eType="#//context/Class"
+          eOpposite="#//context/Class/extension"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="extension" upperBound="-1"
+          eType="#//context/Class" eOpposite="#//context/Class/abstract"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="entity" eType="#//context/Entity"
-          eOpposite="#//context/Entity/prototype"/>
+          eOpposite="#//context/Entity/class"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="IRefferable" abstract="true" interface="true">
       <eStructuralFeatures xsi:type="ecore:EReference" name="operation" eType="#//context/Relation"

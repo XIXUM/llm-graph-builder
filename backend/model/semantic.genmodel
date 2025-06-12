@@ -140,14 +140,14 @@
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//context/ContextRoot/event"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//context/ContextRoot/time"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//context/ContextRoot/relation"/>
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//context/ContextRoot/prototype"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//context/ContextRoot/class"/>
       </genClasses>
       <genClasses ecoreClass="semantic.ecore#//context/Entity">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//context/Entity/state"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference semantic.ecore#//context/Entity/kg_entity"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference semantic.ecore#//context/Entity/prototype"/>
+            ecoreFeature="ecore:EReference semantic.ecore#//context/Entity/class"/>
       </genClasses>
       <genClasses ecoreClass="semantic.ecore#//context/Event">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
@@ -188,13 +188,13 @@
       </genClasses>
       <genClasses ecoreClass="semantic.ecore#//context/PysicalE"/>
       <genClasses ecoreClass="semantic.ecore#//context/VirtualE"/>
-      <genClasses ecoreClass="semantic.ecore#//context/Prototype">
+      <genClasses ecoreClass="semantic.ecore#//context/Class">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference semantic.ecore#//context/Prototype/abstract"/>
+            ecoreFeature="ecore:EReference semantic.ecore#//context/Class/abstract"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference semantic.ecore#//context/Prototype/specification"/>
+            ecoreFeature="ecore:EReference semantic.ecore#//context/Class/extension"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference semantic.ecore#//context/Prototype/entity"/>
+            ecoreFeature="ecore:EReference semantic.ecore#//context/Class/entity"/>
       </genClasses>
       <genClasses image="false" ecoreClass="semantic.ecore#//context/IRefferable">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
