@@ -51,34 +51,10 @@
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference semantic.ecore#//artifact/Document/kg_reference"/>
       </genClasses>
-      <genClasses ecoreClass="semantic.ecore#//artifact/TextDocument">
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/TextDocument/blockElement"/>
-      </genClasses>
-      <genClasses ecoreClass="semantic.ecore#//artifact/SpreadSheet">
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/SpreadSheet/sheet"/>
-      </genClasses>
-      <genClasses ecoreClass="semantic.ecore#//artifact/RichTextDocument"/>
-      <genClasses ecoreClass="semantic.ecore#//artifact/Sheet">
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/Sheet/table"/>
-      </genClasses>
-      <genClasses ecoreClass="semantic.ecore#//artifact/Table">
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/Table/row"/>
-      </genClasses>
-      <genClasses ecoreClass="semantic.ecore#//artifact/Row">
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/Row/cell"/>
-        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/Row/index"/>
-      </genClasses>
-      <genClasses ecoreClass="semantic.ecore#//artifact/Cell">
-        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/Cell/column"/>
-        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/Cell/rowSpan"/>
-        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/Cell/colSpan"/>
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/Cell/paragraph"/>
-      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//artifact/ASCIIdocument"/>
+      <genClasses ecoreClass="semantic.ecore#//artifact/CSS_Style"/>
       <genClasses ecoreClass="semantic.ecore#//artifact/Paragraph">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/Paragraph/sentence"/>
-      </genClasses>
-      <genClasses ecoreClass="semantic.ecore#//artifact/Heading">
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/Heading/sentence"/>
       </genClasses>
       <genClasses image="false" ecoreClass="semantic.ecore#//artifact/ITextBodyEl">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
@@ -102,7 +78,41 @@
       <genClasses image="false" ecoreClass="semantic.ecore#//artifact/IPropertyable">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/IPropertyable/property"/>
       </genClasses>
-      <genClasses image="false" ecoreClass="semantic.ecore#//artifact/SpreatSheetComponent"/>
+      <genClasses ecoreClass="semantic.ecore#//artifact/PlainText">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/PlainText/blockElement"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/PlainText/rowblockel"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//artifact/BinaryDocument"/>
+      <genClasses ecoreClass="semantic.ecore#//artifact/XMLdocument">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/XMLdocument/metaelement"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//artifact/GridBlockEl">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/GridBlockEl/row"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//artifact/RowBlockEl">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/RowBlockEl/gridblockel"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/RowBlockEl/paragraph"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//artifact/RowContainer">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/RowContainer/cell"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/RowContainer/row"/>
+      </genClasses>
+      <genClasses ecoreClass="semantic.ecore#//artifact/Cell">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/Cell/rowblockel"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/Cell/column"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/Cell/rowSpan"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/Cell/colSpan"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="semantic.ecore#//artifact/Styleable">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference semantic.ecore#//artifact/Styleable/css_style"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="semantic.ecore#//artifact/GridElement"/>
+      <genClasses ecoreClass="semantic.ecore#//artifact/MetaElement"/>
+      <genClasses ecoreClass="semantic.ecore#//artifact/SelfClosingTag"/>
+      <genClasses ecoreClass="semantic.ecore#//artifact/NonVoidTag">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/NonVoidTag/rowblockel"/>
+      </genClasses>
     </nestedGenPackages>
     <nestedGenPackages prefix="Infrastructure" disposableProviderFactory="true" ecorePackage="semantic.ecore#//infrastructure">
       <genClasses ecoreClass="semantic.ecore#//infrastructure/Device">

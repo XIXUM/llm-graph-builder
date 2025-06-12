@@ -50,40 +50,9 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="kg_reference" eType="#//knowledgegraph/Document"
           eOpposite="#//knowledgegraph/Document/context_ref"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="TextDocument" eSuperTypes="#//artifact/Document">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="blockElement" upperBound="-1"
-          eType="#//artifact/ITextBodyEl" containment="true"/>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="SpreadSheet" eSuperTypes="#//artifact/Document">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="sheet" upperBound="-1"
-          eType="#//artifact/Sheet" containment="true"/>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="RichTextDocument" eSuperTypes="#//artifact/TextDocument"/>
-    <eClassifiers xsi:type="ecore:EClass" name="Sheet" eSuperTypes="#//IDataComponent #//artifact/SpreatSheetComponent">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="table" upperBound="-1"
-          eType="#//artifact/Table" containment="true"/>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="Table" eSuperTypes="#//IDataComponent #//artifact/SpreatSheetComponent">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="row" upperBound="-1"
-          eType="#//artifact/Row" containment="true"/>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="Row" eSuperTypes="#//IDataComponent #//artifact/SpreatSheetComponent">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="cell" upperBound="-1"
-          eType="#//artifact/Cell" containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="index" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="Cell" eSuperTypes="#//IDataComponent #//artifact/SpreatSheetComponent">
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="column" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="rowSpan" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="colSpan" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="paragraph" upperBound="-1"
-          eType="#//artifact/Paragraph" containment="true"/>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="Paragraph" eSuperTypes="#//artifact/ITextBodyEl #//IIdentifiable #//IDataComponent">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="sentence" upperBound="-1"
-          eType="#//artifact/Sentence" containment="true"/>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="Heading" eSuperTypes="#//artifact/ITextBodyEl #//IIdentifiable #//IDataComponent">
+    <eClassifiers xsi:type="ecore:EClass" name="ASCIIdocument" eSuperTypes="#//artifact/Document"/>
+    <eClassifiers xsi:type="ecore:EClass" name="CSS_Style" eSuperTypes="#//artifact/IPropertyable"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Paragraph" eSuperTypes="#//artifact/ITextBodyEl #//IIdentifiable #//IDataComponent #//artifact/Styleable">
       <eStructuralFeatures xsi:type="ecore:EReference" name="sentence" upperBound="-1"
           eType="#//artifact/Sentence" containment="true"/>
     </eClassifiers>
@@ -95,7 +64,7 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="token" upperBound="-1"
           eType="#//artifact/Token" containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="Token" abstract="true" eSuperTypes="#//IDataComponent"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Token" abstract="true" eSuperTypes="#//IDataComponent #//artifact/Styleable"/>
     <eClassifiers xsi:type="ecore:EClass" name="Word" eSuperTypes="#//artifact/Token">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="word" eType="#//dictionary/Word"/>
@@ -111,8 +80,51 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="property" upperBound="-1"
           eType="#//Property" containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="SpreatSheetComponent" abstract="true"
-        interface="true" eSuperTypes="#//artifact/IPropertyable #//IDataComponent"/>
+    <eClassifiers xsi:type="ecore:EClass" name="PlainText" eSuperTypes="#//artifact/ASCIIdocument">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="blockElement" upperBound="-1"
+          eType="#//artifact/ITextBodyEl" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="rowblockel" upperBound="-1"
+          eType="#//artifact/RowBlockEl" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="BinaryDocument" eSuperTypes="#//artifact/Document"/>
+    <eClassifiers xsi:type="ecore:EClass" name="XMLdocument" eSuperTypes="#//artifact/ASCIIdocument">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="metaelement" upperBound="-1"
+          eType="#//artifact/MetaElement" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="GridBlockEl" eSuperTypes="#//artifact/MetaElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="row" upperBound="-1"
+          eType="#//artifact/RowContainer" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="RowBlockEl" eSuperTypes="#//artifact/Styleable #//artifact/NonVoidTag">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="gridblockel" upperBound="-1"
+          eType="#//artifact/GridBlockEl" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="paragraph" upperBound="-1"
+          eType="#//artifact/Paragraph" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="RowContainer" eSuperTypes="#//artifact/GridElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="cell" upperBound="-1"
+          eType="#//artifact/Cell" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="row" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Cell" eSuperTypes="#//artifact/GridElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="rowblockel" upperBound="-1"
+          eType="#//artifact/NonVoidTag" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="column" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="rowSpan" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="colSpan" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Styleable" abstract="true" interface="true">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="css_style" upperBound="-1"
+          eType="#//artifact/CSS_Style"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="GridElement" abstract="true" interface="true"
+        eSuperTypes="#//artifact/Styleable"/>
+    <eClassifiers xsi:type="ecore:EClass" name="MetaElement" abstract="true" eSuperTypes="#//artifact/IPropertyable #//IDataComponent"/>
+    <eClassifiers xsi:type="ecore:EClass" name="SelfClosingTag" eSuperTypes="#//artifact/MetaElement"/>
+    <eClassifiers xsi:type="ecore:EClass" name="NonVoidTag" eSuperTypes="#//artifact/MetaElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="rowblockel" upperBound="-1"
+          eType="#//artifact/RowBlockEl" containment="true"/>
+    </eClassifiers>
   </eSubpackages>
   <eSubpackages name="infrastructure" nsURI="http://www.xixum.org/semantics/infrastructure"
       nsPrefix="infrastructure">
