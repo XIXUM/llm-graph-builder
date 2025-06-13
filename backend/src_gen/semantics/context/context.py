@@ -65,22 +65,21 @@ class IContextEl(INamable):
         super().__init__(**kwargs)
 
 
-class Prototype(IRefferable):
+class Class(IRefferable):
 
     abstract = EReference(ordered=True, unique=True, containment=False, derived=False)
-    specification = EReference(ordered=True, unique=True,
-                               containment=False, derived=False, upper=-1)
+    extension = EReference(ordered=True, unique=True, containment=False, derived=False, upper=-1)
     entity = EReference(ordered=True, unique=True, containment=False, derived=False)
 
-    def __init__(self, *, abstract=None, specification=None, entity=None, **kwargs):
+    def __init__(self, *, abstract=None, extension=None, entity=None, **kwargs):
 
         super().__init__(**kwargs)
 
         if abstract is not None:
             self.abstract = abstract
 
-        if specification:
-            self.specification.extend(specification)
+        if extension:
+            self.extension.extend(extension)
 
         if entity is not None:
             self.entity = entity
@@ -92,9 +91,9 @@ class ContextRoot(IContextEl):
     event = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
     time = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
     relation = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
-    prototype = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
+    class_ = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
 
-    def __init__(self, *, entity=None, event=None, time=None, relation=None, prototype=None, **kwargs):
+    def __init__(self, *, entity=None, event=None, time=None, relation=None, class_=None, **kwargs):
 
         super().__init__(**kwargs)
 
@@ -110,8 +109,8 @@ class ContextRoot(IContextEl):
         if relation:
             self.relation.extend(relation)
 
-        if prototype:
-            self.prototype.extend(prototype)
+        if class_:
+            self.class_.extend(class_)
 
 
 class Event(IContextEl):
@@ -175,9 +174,9 @@ class Entity(IContextEl, IRefferable):
 
     state = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
     kg_entity = EReference(ordered=True, unique=True, containment=False, derived=False)
-    prototype = EReference(ordered=True, unique=True, containment=False, derived=False)
+    class_ = EReference(ordered=True, unique=True, containment=False, derived=False)
 
-    def __init__(self, *, state=None, kg_entity=None, prototype=None, **kwargs):
+    def __init__(self, *, state=None, kg_entity=None, class_=None, **kwargs):
 
         super().__init__(**kwargs)
 
@@ -187,8 +186,8 @@ class Entity(IContextEl, IRefferable):
         if kg_entity is not None:
             self.kg_entity = kg_entity
 
-        if prototype is not None:
-            self.prototype = prototype
+        if class_ is not None:
+            self.class_ = class_
 
 
 @abstract

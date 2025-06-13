@@ -1,7 +1,7 @@
 from pyecore.resources import global_registry
 from .context import getEClassifier, eClassifiers
 from .context import name, nsURI, nsPrefix, eClass
-from .context import ContextRoot, Entity, Event, State, Time, AbsTime, RelativeTime, Relation, IContextEl, IChronological, PysicalE, VirtualE, Prototype, IRefferable
+from .context import ContextRoot, Entity, Event, State, Time, AbsTime, RelativeTime, Relation, IContextEl, IChronological, PysicalE, VirtualE, Class, IRefferable
 
 
 from . import context
@@ -9,7 +9,7 @@ from .. import semantics
 
 
 __all__ = ['ContextRoot', 'Entity', 'Event', 'State', 'Time', 'AbsTime', 'RelativeTime',
-           'Relation', 'IContextEl', 'IChronological', 'PysicalE', 'VirtualE', 'Prototype', 'IRefferable']
+           'Relation', 'IContextEl', 'IChronological', 'PysicalE', 'VirtualE', 'Class', 'IRefferable']
 
 eSubpackages = []
 eSuperPackage = semantics

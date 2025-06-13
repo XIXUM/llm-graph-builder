@@ -1,14 +1,14 @@
 from pyecore.resources import global_registry
 from .ruleset import getEClassifier, eClassifiers
 from .ruleset import name, nsURI, nsPrefix, eClass
-from .ruleset import RuleRoot, Token, Command, IRuleEl
+from .ruleset import RuleRoot, Token, Predicate, IRuleEl
 
 
 from . import ruleset
 from .. import semantics
 
 
-__all__ = ['RuleRoot', 'Token', 'Command', 'IRuleEl']
+__all__ = ['RuleRoot', 'Token', 'Predicate', 'IRuleEl']
 
 eSubpackages = []
 eSuperPackage = semantics

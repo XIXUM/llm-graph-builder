@@ -42,17 +42,34 @@ class RuleRoot(IRuleEl):
 class Token(IRuleEl):
 
     type = EAttribute(eType=EString, unique=True, derived=False, changeable=True)
+    command = EReference(ordered=True, unique=True, containment=False, derived=False)
+    operation = EReference(ordered=True, unique=True, containment=False, derived=False)
 
-    def __init__(self, *, type=None, **kwargs):
+    def __init__(self, *, type=None, command=None, operation=None, **kwargs):
 
         super().__init__(**kwargs)
 
         if type is not None:
             self.type = type
 
+        if command is not None:
+            self.command = command
 
-class Command(IRuleEl):
+        if operation is not None:
+            self.operation = operation
 
-    def __init__(self, **kwargs):
+
+class Predicate(IRuleEl):
+
+    activeToken = EReference(ordered=True, unique=True, containment=False, derived=False)
+    passiveToken = EReference(ordered=True, unique=True, containment=False, derived=False)
+
+    def __init__(self, *, activeToken=None, passiveToken=None, **kwargs):
 
         super().__init__(**kwargs)
+
+        if activeToken is not None:
+            self.activeToken = activeToken
+
+        if passiveToken is not None:
+            self.passiveToken = passiveToken

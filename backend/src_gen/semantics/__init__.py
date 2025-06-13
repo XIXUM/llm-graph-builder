@@ -4,12 +4,12 @@ from .semantics import name, nsURI, nsPrefix, eClass
 from .semantics import INamable, IDataComponent, Property, IValueComponent, StringProperty, IntProperty, FloatProperty, BoolProperty, ListProperty, MapProperty, Pair, IIdentifiable, IAtomic, IAggregated, IIterable, IContainable
 
 
-from .artifact import SpreadSheet, Sentence, Row, Paragraph, TextDocument, Word, IPropertyable, Document, Sheet, ITextBodyEl, Token, Cell, Number, Artifact, Table, Heading
-from .infrastructure import Domain, ILocation, PathEl, ISubDir, Environment, Device
-from .context import Relation, Prototype, Event, Entity, IRefferable, Time, IChronological, ContextRoot, State
-from .dictionary import WordClass, DictionaryRoot, Stem, Word
-from .ruleset import RuleRoot, Token, Command
-from .knowledgegraph import INode, Entity, Relation, Chunk, KGroot, Document
+from .artifact import Artifact, Sentence, Document, Cell, RowContainer, XMLdocument, RowBlockEl, PlainText, ITextBodyEl, MetaElement, Token, Styleable, Number, Word, CSS_Style, IPropertyable, GridBlockEl, Paragraph, NonVoidTag
+from .infrastructure import ISubDir, Domain, Device, ILocation, Environment, PathEl
+from .context import State, Event, Time, Entity, IRefferable, IChronological, Class, ContextRoot, Relation
+from .dictionary import Stem, WordClass, DictionaryRoot, Word
+from .ruleset import Token, Predicate, RuleRoot
+from .knowledgegraph import Entity, Chunk, KGroot, Document, INode, Relation
 from . import semantics
 from . import artifact
 
@@ -32,22 +32,21 @@ eSuperPackage = None
 semantics.eSubpackages = eSubpackages
 semantics.eSuperPackage = eSuperPackage
 
-ListProperty.entry.eType = Property
-MapProperty.entry.eType = Pair
-Pair.key.eType = Property
-Pair.value.eType = Property
-TextDocument.blockElement.eType = ITextBodyEl
-SpreadSheet.sheet.eType = Sheet
-Sheet.table.eType = Table
-Table.row.eType = Row
-Row.cell.eType = Cell
-Cell.paragraph.eType = Paragraph
 Paragraph.sentence.eType = Sentence
-Heading.sentence.eType = Sentence
 Sentence.token.eType = Token
 Word.word.eType = Word
 Number.value.eType = IAtomic
 IPropertyable.property.eType = Property
+PlainText.blockElement.eType = ITextBodyEl
+PlainText.rowblockel.eType = RowBlockEl
+XMLdocument.metaelement.eType = MetaElement
+GridBlockEl.row.eType = RowContainer
+RowBlockEl.gridblockel.eType = GridBlockEl
+RowBlockEl.paragraph.eType = Paragraph
+RowContainer.cell.eType = Cell
+Cell.rowblockel.eType = NonVoidTag
+Styleable.css_style.eType = CSS_Style
+NonVoidTag.rowblockel.eType = RowBlockEl
 Device.subdir.eType = ISubDir
 PathEl.isubdir.eType = ISubDir
 PathEl.artifact.eType = Artifact
@@ -57,7 +56,7 @@ ContextRoot.entity.eType = Entity
 ContextRoot.event.eType = Event
 ContextRoot.time.eType = Time
 ContextRoot.relation.eType = Relation
-ContextRoot.prototype.eType = Prototype
+ContextRoot.class_.eType = Class
 Entity.state.eType = State
 IChronological.synchronous.eType = IChronological
 DictionaryRoot.word.eType = Word
@@ -66,15 +65,19 @@ Word.ofType.eType = WordClass
 Word.baseform.eType = Word
 Word.stem.eType = Stem
 RuleRoot.token.eType = Token
-RuleRoot.command.eType = Command
+RuleRoot.command.eType = Predicate
 Document.chunk.eType = Chunk
 Chunk.entity.eType = Entity
 KGroot.document.eType = Document
 KGroot.relation.eType = Relation
+ListProperty.entry.eType = Property
+MapProperty.entry.eType = Pair
+Pair.key.eType = Property
+Pair.value.eType = Property
 Document.kg_reference.eType = Document
 ITextBodyEl.chunk.eType = Chunk
 Entity.kg_entity.eType = Entity
-Entity.prototype.eType = Prototype
+Entity.class_.eType = Class
 Event.next.eType = Event
 Event.previous.eType = Event
 Event.previous.eOpposite = Event.next
@@ -90,15 +93,21 @@ Relation.kg_relation.eType = Relation
 IChronological.after.eType = IChronological
 IChronological.before.eType = IChronological
 IChronological.before.eOpposite = IChronological.after
-Prototype.abstract.eType = Prototype
-Prototype.specification.eType = Prototype
-Prototype.specification.eOpposite = Prototype.abstract
-Prototype.entity.eType = Entity
-Prototype.entity.eOpposite = Entity.prototype
+Class.abstract.eType = Class
+Class.extension.eType = Class
+Class.extension.eOpposite = Class.abstract
+Class.entity.eType = Entity
+Class.entity.eOpposite = Entity.class_
 IRefferable.operation.eType = Relation
 IRefferable.operation.eOpposite = Relation.passive_entity
 IRefferable.command.eType = Relation
 IRefferable.command.eOpposite = Relation.active_entity
+Token.command.eType = Predicate
+Token.operation.eType = Predicate
+Predicate.activeToken.eType = Token
+Predicate.activeToken.eOpposite = Token.command
+Predicate.passiveToken.eType = Token
+Predicate.passiveToken.eOpposite = Token.operation
 Document.context_ref.eType = Document
 Document.context_ref.eOpposite = Document.kg_reference
 Chunk.context_ref.eType = ITextBodyEl

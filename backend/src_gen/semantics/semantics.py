@@ -44,24 +44,6 @@ class IDataComponent(EObject, metaclass=MetaEClass):
         super().__init__()
 
 
-class Pair(EObject, metaclass=MetaEClass):
-
-    key = EReference(ordered=True, unique=True, containment=True, derived=False)
-    value = EReference(ordered=True, unique=True, containment=True, derived=False)
-
-    def __init__(self, *, key=None, value=None):
-        # if kwargs:
-        #    raise AttributeError('unexpected arguments: {}'.format(kwargs))
-
-        super().__init__()
-
-        if key is not None:
-            self.key = key
-
-        if value is not None:
-            self.value = value
-
-
 @abstract
 class IIdentifiable(EObject, metaclass=MetaEClass):
 
@@ -103,6 +85,22 @@ class IValueComponent(INamable):
     def __init__(self, **kwargs):
 
         super().__init__(**kwargs)
+
+
+class Pair(IAggregated):
+
+    key = EReference(ordered=True, unique=True, containment=True, derived=False)
+    value = EReference(ordered=True, unique=True, containment=True, derived=False)
+
+    def __init__(self, *, key=None, value=None, **kwargs):
+
+        super().__init__(**kwargs)
+
+        if key is not None:
+            self.key = key
+
+        if value is not None:
+            self.value = value
 
 
 @abstract

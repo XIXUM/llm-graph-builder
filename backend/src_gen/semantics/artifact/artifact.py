@@ -2,7 +2,7 @@
 from functools import partial
 import pyecore.ecore as Ecore
 from pyecore.ecore import *
-from semantics import IDataComponent, IIdentifiable, IContainable, INamable
+from semantics import INamable, IDataComponent, IIdentifiable, IContainable
 
 
 name = 'artifact'
@@ -46,7 +46,29 @@ class IPropertyable(EObject, metaclass=MetaEClass):
 
 
 @abstract
-class Token(IDataComponent):
+class Styleable(EObject, metaclass=MetaEClass):
+
+    css_style = EReference(ordered=True, unique=True, containment=False, derived=False, upper=-1)
+
+    def __init__(self, *, css_style=None):
+        # if kwargs:
+        #    raise AttributeError('unexpected arguments: {}'.format(kwargs))
+
+        super().__init__()
+
+        if css_style:
+            self.css_style.extend(css_style)
+
+
+class CSS_Style(IPropertyable):
+
+    def __init__(self, **kwargs):
+
+        super().__init__(**kwargs)
+
+
+@abstract
+class GridElement(Styleable):
 
     def __init__(self, **kwargs):
 
@@ -58,6 +80,86 @@ class Artifact(INamable, IPropertyable):
     def __init__(self, **kwargs):
 
         super().__init__(**kwargs)
+
+
+@abstract
+class Token(IDataComponent, Styleable):
+
+    def __init__(self, **kwargs):
+
+        super().__init__(**kwargs)
+
+
+class RowContainer(GridElement):
+
+    row = EAttribute(eType=EInt, unique=True, derived=False, changeable=True)
+    cell = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
+
+    def __init__(self, *, cell=None, row=None, **kwargs):
+
+        super().__init__(**kwargs)
+
+        if row is not None:
+            self.row = row
+
+        if cell:
+            self.cell.extend(cell)
+
+
+class Cell(GridElement):
+
+    column = EAttribute(eType=EInt, unique=True, derived=False, changeable=True)
+    rowSpan = EAttribute(eType=EInt, unique=True, derived=False, changeable=True)
+    colSpan = EAttribute(eType=EInt, unique=True, derived=False, changeable=True)
+    rowblockel = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
+
+    def __init__(self, *, rowblockel=None, column=None, rowSpan=None, colSpan=None, **kwargs):
+
+        super().__init__(**kwargs)
+
+        if column is not None:
+            self.column = column
+
+        if rowSpan is not None:
+            self.rowSpan = rowSpan
+
+        if colSpan is not None:
+            self.colSpan = colSpan
+
+        if rowblockel:
+            self.rowblockel.extend(rowblockel)
+
+
+@abstract
+class MetaElement(IPropertyable, IDataComponent):
+
+    def __init__(self, **kwargs):
+
+        super().__init__(**kwargs)
+
+
+class Document(Artifact):
+
+    kg_reference = EReference(ordered=True, unique=True, containment=False, derived=False)
+
+    def __init__(self, *, kg_reference=None, **kwargs):
+
+        super().__init__(**kwargs)
+
+        if kg_reference is not None:
+            self.kg_reference = kg_reference
+
+
+class Sentence(IDataComponent, IContainable):
+
+    token = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
+
+    def __init__(self, *, token=None, **kwargs):
+
+        super().__init__(**kwargs)
+
+        if token:
+            self.token.extend(token)
 
 
 class Word(Token):
@@ -100,39 +202,7 @@ class NamedIdentity(Token):
             self.value = value
 
 
-@abstract
-class SpreatSheetComponent(IPropertyable, IDataComponent):
-
-    def __init__(self, **kwargs):
-
-        super().__init__(**kwargs)
-
-
-class Document(Artifact):
-
-    kg_reference = EReference(ordered=True, unique=True, containment=False, derived=False)
-
-    def __init__(self, *, kg_reference=None, **kwargs):
-
-        super().__init__(**kwargs)
-
-        if kg_reference is not None:
-            self.kg_reference = kg_reference
-
-
-class Sheet(IDataComponent, SpreatSheetComponent):
-
-    table = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
-
-    def __init__(self, *, table=None, **kwargs):
-
-        super().__init__(**kwargs)
-
-        if table:
-            self.table.extend(table)
-
-
-class Table(IDataComponent, SpreatSheetComponent):
+class GridBlockEl(MetaElement):
 
     row = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
 
@@ -144,47 +214,33 @@ class Table(IDataComponent, SpreatSheetComponent):
             self.row.extend(row)
 
 
-class Row(IDataComponent, SpreatSheetComponent):
+class SelfClosingTag(MetaElement):
 
-    index = EAttribute(eType=EInt, unique=True, derived=False, changeable=True)
-    cell = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
-
-    def __init__(self, *, cell=None, index=None, **kwargs):
+    def __init__(self, **kwargs):
 
         super().__init__(**kwargs)
 
-        if index is not None:
-            self.index = index
 
-        if cell:
-            self.cell.extend(cell)
+class NonVoidTag(MetaElement):
 
+    rowblockel = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
 
-class Cell(IDataComponent, SpreatSheetComponent):
-
-    column = EAttribute(eType=EInt, unique=True, derived=False, changeable=True)
-    rowSpan = EAttribute(eType=EInt, unique=True, derived=False, changeable=True)
-    colSpan = EAttribute(eType=EInt, unique=True, derived=False, changeable=True)
-    paragraph = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
-
-    def __init__(self, *, column=None, rowSpan=None, colSpan=None, paragraph=None, **kwargs):
+    def __init__(self, *, rowblockel=None, **kwargs):
 
         super().__init__(**kwargs)
 
-        if column is not None:
-            self.column = column
-
-        if rowSpan is not None:
-            self.rowSpan = rowSpan
-
-        if colSpan is not None:
-            self.colSpan = colSpan
-
-        if paragraph:
-            self.paragraph.extend(paragraph)
+        if rowblockel:
+            self.rowblockel.extend(rowblockel)
 
 
-class Paragraph(ITextBodyEl, IIdentifiable, IDataComponent):
+class ASCIIdocument(Document):
+
+    def __init__(self, **kwargs):
+
+        super().__init__(**kwargs)
+
+
+class Paragraph(ITextBodyEl, IIdentifiable, IDataComponent, Styleable):
 
     sentence = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
 
@@ -196,56 +252,52 @@ class Paragraph(ITextBodyEl, IIdentifiable, IDataComponent):
             self.sentence.extend(sentence)
 
 
-class Heading(ITextBodyEl, IIdentifiable, IDataComponent):
+class BinaryDocument(Document):
 
-    sentence = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
-
-    def __init__(self, *, sentence=None, **kwargs):
+    def __init__(self, **kwargs):
 
         super().__init__(**kwargs)
 
-        if sentence:
-            self.sentence.extend(sentence)
 
-
-class Sentence(IDataComponent, IContainable):
-
-    token = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
-
-    def __init__(self, *, token=None, **kwargs):
-
-        super().__init__(**kwargs)
-
-        if token:
-            self.token.extend(token)
-
-
-class TextDocument(Document):
+class PlainText(ASCIIdocument):
 
     blockElement = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
+    rowblockel = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
 
-    def __init__(self, *, blockElement=None, **kwargs):
+    def __init__(self, *, blockElement=None, rowblockel=None, **kwargs):
 
         super().__init__(**kwargs)
 
         if blockElement:
             self.blockElement.extend(blockElement)
 
+        if rowblockel:
+            self.rowblockel.extend(rowblockel)
 
-class SpreadSheet(Document):
 
-    sheet = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
+class XMLdocument(ASCIIdocument):
 
-    def __init__(self, *, sheet=None, **kwargs):
+    metaelement = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
+
+    def __init__(self, *, metaelement=None, **kwargs):
+
+        super().__init__(**kwargs)
+
+        if metaelement:
+            self.metaelement.extend(metaelement)
+
+
+class RowBlockEl(Styleable, NonVoidTag):
+
+    gridblockel = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
+    paragraph = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
+
+    def __init__(self, *, gridblockel=None, paragraph=None, **kwargs):
 
         super().__init__(**kwargs)
 
-        if sheet:
-            self.sheet.extend(sheet)
+        if gridblockel:
+            self.gridblockel.extend(gridblockel)
 
-
-class RichTextDocument(TextDocument):
-
-    def __init__(self, **kwargs):
-
-        super().__init__(**kwargs)
+        if paragraph:
+            self.paragraph.extend(paragraph)
