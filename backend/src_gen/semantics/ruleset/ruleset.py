@@ -2,7 +2,7 @@
 from functools import partial
 import pyecore.ecore as Ecore
 from pyecore.ecore import *
-from src_gen.semantics.semantics import INamable
+from semantics import INamable
 
 
 name = 'ruleset'

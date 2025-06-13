@@ -2,7 +2,7 @@
 from functools import partial
 import pyecore.ecore as Ecore
 from pyecore.ecore import *
-from pyecore.type import Boolean
+from type import Boolean
 
 
 name = 'semantics'

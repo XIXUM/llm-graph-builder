@@ -4,12 +4,12 @@ from .semantics import name, nsURI, nsPrefix, eClass
 from .semantics import INamable, IDataComponent, Property, IValueComponent, StringProperty, IntProperty, FloatProperty, BoolProperty, ListProperty, MapProperty, Pair, IIdentifiable, IAtomic, IAggregated, IIterable, IContainable
 
 
-from .artifact import Token, Artifact, IPropertyable, Sheet, Word, Number, Table, Heading, Sentence, Row, Document, Paragraph, SpreadSheet, TextDocument, Cell, ITextBodyEl
-from .infrastructure import PathEl, Device, ILocation, ISubDir, Domain, Environment
-from .context import Entity, IChronological, Relation, Time, IRefferable, Prototype, Event, State, ContextRoot
-from .dictionary import Word, WordClass, Stem, DictionaryRoot
+from .artifact import SpreadSheet, Sentence, Row, Paragraph, TextDocument, Word, IPropertyable, Document, Sheet, ITextBodyEl, Token, Cell, Number, Artifact, Table, Heading
+from .infrastructure import Domain, ILocation, PathEl, ISubDir, Environment, Device
+from .context import Relation, Prototype, Event, Entity, IRefferable, Time, IChronological, ContextRoot, State
+from .dictionary import WordClass, DictionaryRoot, Stem, Word
 from .ruleset import RuleRoot, Token, Command
-from .knowledgegraph import Document, Relation, Chunk, KGroot, Entity, INode
+from .knowledgegraph import INode, Entity, Relation, Chunk, KGroot, Document
 from . import semantics
 from . import artifact
 
