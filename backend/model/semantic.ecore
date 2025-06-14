@@ -44,14 +44,18 @@
       eSuperTypes="#//IAggregated"/>
   <eClassifiers xsi:type="ecore:EClass" name="IContainable" abstract="true" interface="true"
       eSuperTypes="#//IAggregated"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IPropertyable" abstract="true" interface="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="property" upperBound="-1"
+        eType="#//Property" containment="true"/>
+  </eClassifiers>
   <eSubpackages name="artifact" nsURI="http://www.xixum.org/semantics/artifact" nsPrefix="artifact">
-    <eClassifiers xsi:type="ecore:EClass" name="Artifact" eSuperTypes="#//INamable #//artifact/IPropertyable"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Artifact" eSuperTypes="#//INamable #//IPropertyable"/>
     <eClassifiers xsi:type="ecore:EClass" name="Document" eSuperTypes="#//artifact/Artifact">
       <eStructuralFeatures xsi:type="ecore:EReference" name="kg_reference" eType="#//knowledgegraph/Document"
           eOpposite="#//knowledgegraph/Document/context_ref"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ASCIIdocument" eSuperTypes="#//artifact/Document"/>
-    <eClassifiers xsi:type="ecore:EClass" name="CSS_Style" eSuperTypes="#//artifact/IPropertyable"/>
+    <eClassifiers xsi:type="ecore:EClass" name="CSS_Style" eSuperTypes="#//IPropertyable #//INamable"/>
     <eClassifiers xsi:type="ecore:EClass" name="Paragraph" eSuperTypes="#//artifact/ITextBodyEl #//IIdentifiable #//IDataComponent #//artifact/Styleable">
       <eStructuralFeatures xsi:type="ecore:EReference" name="sentence" upperBound="-1"
           eType="#//artifact/Sentence" containment="true"/>
@@ -75,10 +79,6 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="NamedIdentity" eSuperTypes="#//artifact/Token">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="IPropertyable" abstract="true" interface="true">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="property" upperBound="-1"
-          eType="#//Property" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="PlainText" eSuperTypes="#//artifact/ASCIIdocument">
       <eStructuralFeatures xsi:type="ecore:EReference" name="blockElement" upperBound="-1"
@@ -119,7 +119,7 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="GridElement" abstract="true" interface="true"
         eSuperTypes="#//artifact/Styleable"/>
-    <eClassifiers xsi:type="ecore:EClass" name="MetaElement" abstract="true" eSuperTypes="#//artifact/IPropertyable #//IDataComponent"/>
+    <eClassifiers xsi:type="ecore:EClass" name="MetaElement" abstract="true" eSuperTypes="#//IPropertyable #//IDataComponent"/>
     <eClassifiers xsi:type="ecore:EClass" name="SelfClosingTag" eSuperTypes="#//artifact/MetaElement"/>
     <eClassifiers xsi:type="ecore:EClass" name="NonVoidTag" eSuperTypes="#//artifact/MetaElement">
       <eStructuralFeatures xsi:type="ecore:EReference" name="rowblockel" upperBound="-1"
@@ -138,7 +138,7 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="artifact" upperBound="-1"
           eType="#//artifact/Artifact" containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="Domain" eSuperTypes="#//infrastructure/ILocation #//infrastructure/IWebLocation">
+    <eClassifiers xsi:type="ecore:EClass" name="Domain" eSuperTypes="#//infrastructure/IWebLocation #//infrastructure/IInfrastructureEl">
       <eStructuralFeatures xsi:type="ecore:EReference" name="subdir" upperBound="-1"
           eType="#//infrastructure/ISubDir" containment="true"/>
     </eClassifiers>
@@ -146,11 +146,12 @@
         eSuperTypes="#//infrastructure/IInfrastructureEl"/>
     <eClassifiers xsi:type="ecore:EClass" name="IInfrastructureEl" abstract="true"
         interface="true" eSuperTypes="#//INamable"/>
-    <eClassifiers xsi:type="ecore:EClass" name="Environment">
+    <eClassifiers xsi:type="ecore:EClass" name="Environment" eSuperTypes="#//INamable">
       <eStructuralFeatures xsi:type="ecore:EReference" name="location" upperBound="-1"
           eType="#//infrastructure/ILocation" containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="ILocation" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="ILocation" abstract="true" interface="true"
+        eSuperTypes="#//INamable"/>
     <eClassifiers xsi:type="ecore:EClass" name="ILocalLocation" abstract="true" interface="true"
         eSuperTypes="#//infrastructure/ILocation"/>
     <eClassifiers xsi:type="ecore:EClass" name="IWebLocation" abstract="true" interface="true"

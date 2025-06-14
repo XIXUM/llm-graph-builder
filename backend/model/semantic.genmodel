@@ -45,6 +45,9 @@
     <genClasses image="false" ecoreClass="semantic.ecore#//IAggregated"/>
     <genClasses image="false" ecoreClass="semantic.ecore#//IIterable"/>
     <genClasses image="false" ecoreClass="semantic.ecore#//IContainable"/>
+    <genClasses image="false" ecoreClass="semantic.ecore#//IPropertyable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//IPropertyable/property"/>
+    </genClasses>
     <nestedGenPackages prefix="Artifact" disposableProviderFactory="true" ecorePackage="semantic.ecore#//artifact">
       <genClasses ecoreClass="semantic.ecore#//artifact/Artifact"/>
       <genClasses ecoreClass="semantic.ecore#//artifact/Document">
@@ -74,9 +77,6 @@
       </genClasses>
       <genClasses ecoreClass="semantic.ecore#//artifact/NamedIdentity">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute semantic.ecore#//artifact/NamedIdentity/value"/>
-      </genClasses>
-      <genClasses image="false" ecoreClass="semantic.ecore#//artifact/IPropertyable">
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/IPropertyable/property"/>
       </genClasses>
       <genClasses ecoreClass="semantic.ecore#//artifact/PlainText">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//artifact/PlainText/blockElement"/>
