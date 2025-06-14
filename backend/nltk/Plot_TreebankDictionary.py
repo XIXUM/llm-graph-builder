@@ -4,9 +4,13 @@ import nltk
 import re
 from typing import List
 from neomodel import StructuredNode, StringProperty, IntegerProperty
+from oauthlib.uri_validate import absolute_URI
+
 from Neo4jAccess import Neo4jDatabaseClient
 from pathlib import Path
 import inspect
+
+from semantics import Environment
 
 # Ensure NLTK sentence tokenizer is available
 nltk.download('punkt')
@@ -160,15 +164,16 @@ class TextStructure:
         return self.structure
 
     def print_structure(self):
-        self._createDocument()
+        self._createInfrastructure()
+        #self._createDocument()
         for sec, section in enumerate(self.structure):
-            self._createSection(section, sec)
+            #self._createSection(section, sec)
             print(f"\n=== Caption: {section['caption']} ===")
             for p, paragraph in enumerate(section['paragraphs']):
-                self._createParagraphs(paragraph, p, sec)
+                #self._createParagraphs(paragraph, p, sec)
                 print(f"  Paragraph {p}:")
                 for ss, sentence in enumerate(paragraph):
-                    self._createSentence(sentence, ss, p)
+                    #self._createSentence(sentence, ss, p)
                     print(f"    - {sentence}")
 
     def _createDocument(self):
@@ -294,27 +299,40 @@ class TextStructure:
         result = self.neo4j_context_client.run_query(queryStr)
         return result
 
+    def _createInfrastructure(self):
+        """
+        creates the infrastructure for artifacts
+        Returns:
+
+        """
+        pass
+
 
 # Example usage
-if __name__ == "__main__":
-    sample_text = """
-INTRODUCTION
-
-This is the first paragraph. It has two sentences.
-Here is the second paragraph of the introduction.
-
-METHODS
-
-We conducted several experiments. The data was collected from multiple sources.
-Results were statistically significant.
-
-CONCLUSION
-
-The findings support our hypothesis.
+def generateInfrastructureToArtifact(documentPath: Path, env: Environment):
     """
+    create reducted infrastructure to artifact
+    Args:
+        documentPath:
+        env:
+
+    Returns:
+
+    """
+    absolute = documentPath.absolute()
+    absolute.is_mount()
+
+
+if __name__ == "__main__":
+
     documentPath = Path("../../experiments/ASchoolEssay.txt")
     # Example usage
     try:
+        env = Environment()
+        env.name = "Global Infrastructure"
+        generateInfrastructureToArtifact(documentPath, env)
+
+
         file_content = import_text_file(documentPath)
         if file_content:
             ts = TextStructure(file_content)

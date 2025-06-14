@@ -1,15 +1,15 @@
 from pyecore.resources import global_registry
 from .artifact import getEClassifier, eClassifiers
 from .artifact import name, nsURI, nsPrefix, eClass
-from .artifact import Artifact, Document, ASCIIdocument, CSS_Style, Paragraph, ITextBodyEl, Sentence, Token, Word, Number, NamedIdentity, IPropertyable, PlainText, BinaryDocument, XMLdocument, GridBlockEl, RowBlockEl, RowContainer, Cell, Styleable, GridElement, MetaElement, SelfClosingTag, NonVoidTag
+from .artifact import Artifact, Document, ASCIIdocument, CSS_Style, Paragraph, ITextBodyEl, Sentence, Token, Word, Number, NamedIdentity, PlainText, BinaryDocument, XMLdocument, GridBlockEl, RowBlockEl, RowContainer, Cell, Styleable, GridElement, MetaElement, SelfClosingTag, NonVoidTag
 
 
 from . import artifact
 from .. import semantics
 
 
-__all__ = ['Artifact', 'Document', 'ASCIIdocument', 'CSS_Style', 'Paragraph', 'ITextBodyEl', 'Sentence', 'Token', 'Word', 'Number', 'NamedIdentity', 'IPropertyable',
-           'PlainText', 'BinaryDocument', 'XMLdocument', 'GridBlockEl', 'RowBlockEl', 'RowContainer', 'Cell', 'Styleable', 'GridElement', 'MetaElement', 'SelfClosingTag', 'NonVoidTag']
+__all__ = ['Artifact', 'Document', 'ASCIIdocument', 'CSS_Style', 'Paragraph', 'ITextBodyEl', 'Sentence', 'Token', 'Word', 'Number', 'NamedIdentity', 'PlainText',
+           'BinaryDocument', 'XMLdocument', 'GridBlockEl', 'RowBlockEl', 'RowContainer', 'Cell', 'Styleable', 'GridElement', 'MetaElement', 'SelfClosingTag', 'NonVoidTag']
 
 eSubpackages = []
 eSuperPackage = semantics

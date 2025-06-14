@@ -1,15 +1,15 @@
 from pyecore.resources import global_registry
 from .semantics import getEClassifier, eClassifiers
 from .semantics import name, nsURI, nsPrefix, eClass
-from .semantics import INamable, IDataComponent, Property, IValueComponent, StringProperty, IntProperty, FloatProperty, BoolProperty, ListProperty, MapProperty, Pair, IIdentifiable, IAtomic, IAggregated, IIterable, IContainable
+from .semantics import INamable, IDataComponent, Property, IValueComponent, StringProperty, IntProperty, FloatProperty, BoolProperty, ListProperty, MapProperty, Pair, IIdentifiable, IAtomic, IAggregated, IIterable, IContainable, IPropertyable
 
 
-from .artifact import Artifact, Sentence, Document, Cell, RowContainer, XMLdocument, RowBlockEl, PlainText, ITextBodyEl, MetaElement, Token, Styleable, Number, Word, CSS_Style, IPropertyable, GridBlockEl, Paragraph, NonVoidTag
-from .infrastructure import ISubDir, Domain, Device, ILocation, Environment, PathEl
-from .context import State, Event, Time, Entity, IRefferable, IChronological, Class, ContextRoot, Relation
-from .dictionary import Stem, WordClass, DictionaryRoot, Word
-from .ruleset import Token, Predicate, RuleRoot
-from .knowledgegraph import Entity, Chunk, KGroot, Document, INode, Relation
+from .artifact import Token, NonVoidTag, Document, ITextBodyEl, Styleable, RowBlockEl, Number, Paragraph, Word, Cell, MetaElement, Artifact, GridBlockEl, Sentence, XMLdocument, RowContainer, CSS_Style, PlainText
+from .infrastructure import Environment, PathEl, ISubDir, Domain, Device, ILocation
+from .context import Relation, State, Time, Event, IRefferable, Entity, IChronological, Class, ContextRoot
+from .dictionary import DictionaryRoot, Word, WordClass, Stem
+from .ruleset import RuleRoot, Predicate, Token
+from .knowledgegraph import KGroot, INode, Relation, Entity, Chunk, Document
 from . import semantics
 from . import artifact
 
@@ -24,8 +24,8 @@ from . import ruleset
 from . import knowledgegraph
 
 
-__all__ = ['INamable', 'IDataComponent', 'Property', 'IValueComponent', 'StringProperty', 'IntProperty', 'FloatProperty',
-           'BoolProperty', 'ListProperty', 'MapProperty', 'Pair', 'IIdentifiable', 'IAtomic', 'IAggregated', 'IIterable', 'IContainable']
+__all__ = ['INamable', 'IDataComponent', 'Property', 'IValueComponent', 'StringProperty', 'IntProperty', 'FloatProperty', 'BoolProperty',
+           'ListProperty', 'MapProperty', 'Pair', 'IIdentifiable', 'IAtomic', 'IAggregated', 'IIterable', 'IContainable', 'IPropertyable']
 
 eSubpackages = [artifact, infrastructure, context, dictionary, ruleset, knowledgegraph]
 eSuperPackage = None
@@ -36,7 +36,6 @@ Paragraph.sentence.eType = Sentence
 Sentence.token.eType = Token
 Word.word.eType = Word
 Number.value.eType = IAtomic
-IPropertyable.property.eType = Property
 PlainText.blockElement.eType = ITextBodyEl
 PlainText.rowblockel.eType = RowBlockEl
 XMLdocument.metaelement.eType = MetaElement
@@ -74,6 +73,7 @@ ListProperty.entry.eType = Property
 MapProperty.entry.eType = Pair
 Pair.key.eType = Property
 Pair.value.eType = Property
+IPropertyable.property.eType = Property
 Document.kg_reference.eType = Document
 ITextBodyEl.chunk.eType = Chunk
 Entity.kg_entity.eType = Entity

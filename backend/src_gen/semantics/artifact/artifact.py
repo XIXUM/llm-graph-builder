@@ -2,7 +2,7 @@
 from functools import partial
 import pyecore.ecore as Ecore
 from pyecore.ecore import *
-from src_gen.semantics import INamable, IDataComponent, IIdentifiable, IContainable
+from semantics import IIdentifiable, IContainable, IDataComponent, IPropertyable, INamable
 
 
 name = 'artifact'
@@ -31,21 +31,6 @@ class ITextBodyEl(EObject, metaclass=MetaEClass):
 
 
 @abstract
-class IPropertyable(EObject, metaclass=MetaEClass):
-
-    property = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
-
-    def __init__(self, *, property=None):
-        # if kwargs:
-        #    raise AttributeError('unexpected arguments: {}'.format(kwargs))
-
-        super().__init__()
-
-        if property:
-            self.property.extend(property)
-
-
-@abstract
 class Styleable(EObject, metaclass=MetaEClass):
 
     css_style = EReference(ordered=True, unique=True, containment=False, derived=False, upper=-1)
@@ -60,13 +45,6 @@ class Styleable(EObject, metaclass=MetaEClass):
             self.css_style.extend(css_style)
 
 
-class CSS_Style(IPropertyable):
-
-    def __init__(self, **kwargs):
-
-        super().__init__(**kwargs)
-
-
 @abstract
 class GridElement(Styleable):
 
@@ -76,6 +54,13 @@ class GridElement(Styleable):
 
 
 class Artifact(INamable, IPropertyable):
+
+    def __init__(self, **kwargs):
+
+        super().__init__(**kwargs)
+
+
+class CSS_Style(IPropertyable, INamable):
 
     def __init__(self, **kwargs):
 

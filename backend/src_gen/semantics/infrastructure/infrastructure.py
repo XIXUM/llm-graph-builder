@@ -2,7 +2,7 @@
 from functools import partial
 import pyecore.ecore as Ecore
 from pyecore.ecore import *
-from src_gen.semantics import INamable
+from semantics import INamable
 
 
 name = 'infrastructure'
@@ -15,32 +15,36 @@ eClassifiers = {}
 getEClassifier = partial(Ecore.getEClassifier, searchspace=eClassifiers)
 
 
-class Environment(EObject, metaclass=MetaEClass):
+@abstract
+class IInfrastructureEl(INamable):
+
+    def __init__(self, **kwargs):
+
+        super().__init__(**kwargs)
+
+
+class Environment(INamable):
 
     location = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
 
-    def __init__(self, *, location=None):
-        # if kwargs:
-        #    raise AttributeError('unexpected arguments: {}'.format(kwargs))
+    def __init__(self, *, location=None, **kwargs):
 
-        super().__init__()
+        super().__init__(**kwargs)
 
         if location:
             self.location.extend(location)
 
 
 @abstract
-class ILocation(EObject, metaclass=MetaEClass):
+class ILocation(INamable):
 
-    def __init__(self):
-        # if kwargs:
-        #    raise AttributeError('unexpected arguments: {}'.format(kwargs))
+    def __init__(self, **kwargs):
 
-        super().__init__()
+        super().__init__(**kwargs)
 
 
 @abstract
-class IInfrastructureEl(INamable):
+class ISubDir(IInfrastructureEl):
 
     def __init__(self, **kwargs):
 
@@ -63,26 +67,6 @@ class IWebLocation(ILocation):
         super().__init__(**kwargs)
 
 
-class Domain(ILocation, IWebLocation):
-
-    subdir = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
-
-    def __init__(self, *, subdir=None, **kwargs):
-
-        super().__init__(**kwargs)
-
-        if subdir:
-            self.subdir.extend(subdir)
-
-
-@abstract
-class ISubDir(IInfrastructureEl):
-
-    def __init__(self, **kwargs):
-
-        super().__init__(**kwargs)
-
-
 class PathEl(ISubDir):
 
     isubdir = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
@@ -97,6 +81,18 @@ class PathEl(ISubDir):
 
         if artifact:
             self.artifact.extend(artifact)
+
+
+class Domain(ILocation, IWebLocation):
+
+    subdir = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
+
+    def __init__(self, *, subdir=None, **kwargs):
+
+        super().__init__(**kwargs)
+
+        if subdir:
+            self.subdir.extend(subdir)
 
 
 class Device(IInfrastructureEl, ILocalLocation):

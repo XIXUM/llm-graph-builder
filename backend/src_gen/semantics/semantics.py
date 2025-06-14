@@ -80,6 +80,21 @@ class IAggregated(EObject, metaclass=MetaEClass):
 
 
 @abstract
+class IPropertyable(EObject, metaclass=MetaEClass):
+
+    property = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
+
+    def __init__(self, *, property=None):
+        # if kwargs:
+        #    raise AttributeError('unexpected arguments: {}'.format(kwargs))
+
+        super().__init__()
+
+        if property:
+            self.property.extend(property)
+
+
+@abstract
 class IValueComponent(INamable):
 
     def __init__(self, **kwargs):
