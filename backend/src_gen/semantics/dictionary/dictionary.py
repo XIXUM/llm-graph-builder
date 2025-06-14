@@ -25,21 +25,21 @@ class IDictionaryEl(INamable):
 
 class DictionaryRoot(IDictionaryEl):
 
-    word = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
     wordclass = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
+    word = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
 
-    def __init__(self, *, word=None, wordclass=None, **kwargs):
+    def __init__(self, *, wordclass=None, word=None, **kwargs):
 
         super().__init__(**kwargs)
-
-        if word:
-            self.word.extend(word)
 
         if wordclass:
             self.wordclass.extend(wordclass)
 
+        if word:
+            self.word.extend(word)
 
-class Word(IDictionaryEl):
+
+class LexicalWord(IDictionaryEl):
 
     ofType = EReference(ordered=True, unique=True, containment=False, derived=False, upper=-1)
     baseform = EReference(ordered=True, unique=True, containment=False, derived=False)

@@ -1,14 +1,14 @@
 from pyecore.resources import global_registry
 from .knowledgegraph import getEClassifier, eClassifiers
 from .knowledgegraph import name, nsURI, nsPrefix, eClass
-from .knowledgegraph import Document, Chunk, Entity, KGroot, Relation, INode
+from .knowledgegraph import KGdocument, KGchunk, KGentity, KGroot, KGrelation, INode
 
 
 from . import knowledgegraph
 from .. import semantics
 
 
-__all__ = ['Document', 'Chunk', 'Entity', 'KGroot', 'Relation', 'INode']
+__all__ = ['KGdocument', 'KGchunk', 'KGentity', 'KGroot', 'KGrelation', 'INode']
 
 eSubpackages = []
 eSuperPackage = semantics

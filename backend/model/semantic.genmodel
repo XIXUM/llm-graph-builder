@@ -205,15 +205,15 @@
     </nestedGenPackages>
     <nestedGenPackages prefix="Dictionary" disposableProviderFactory="true" ecorePackage="semantic.ecore#//dictionary">
       <genClasses ecoreClass="semantic.ecore#//dictionary/DictionaryRoot">
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//dictionary/DictionaryRoot/word"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//dictionary/DictionaryRoot/wordclass"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//dictionary/DictionaryRoot/word"/>
       </genClasses>
-      <genClasses ecoreClass="semantic.ecore#//dictionary/Word">
+      <genClasses ecoreClass="semantic.ecore#//dictionary/LexicalWord">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference semantic.ecore#//dictionary/Word/ofType"/>
+            ecoreFeature="ecore:EReference semantic.ecore#//dictionary/LexicalWord/ofType"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference semantic.ecore#//dictionary/Word/baseform"/>
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//dictionary/Word/stem"/>
+            ecoreFeature="ecore:EReference semantic.ecore#//dictionary/LexicalWord/baseform"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//dictionary/LexicalWord/stem"/>
       </genClasses>
       <genClasses ecoreClass="semantic.ecore#//dictionary/WordClass"/>
       <genClasses ecoreClass="semantic.ecore#//dictionary/Stem"/>
@@ -240,31 +240,31 @@
       <genClasses image="false" ecoreClass="semantic.ecore#//ruleset/IRuleEl"/>
     </nestedGenPackages>
     <nestedGenPackages prefix="NewPackage6" disposableProviderFactory="true" ecorePackage="semantic.ecore#//knowledgegraph">
-      <genClasses ecoreClass="semantic.ecore#//knowledgegraph/Document">
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/Document/chunk"/>
+      <genClasses ecoreClass="semantic.ecore#//knowledgegraph/KGdocument">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/KGdocument/chunk"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/Document/context_ref"/>
+            ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/KGdocument/context_ref"/>
       </genClasses>
-      <genClasses ecoreClass="semantic.ecore#//knowledgegraph/Chunk">
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/Chunk/entity"/>
+      <genClasses ecoreClass="semantic.ecore#//knowledgegraph/KGchunk">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/Chunk/context_ref"/>
+            ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/KGchunk/context_ref"/>
       </genClasses>
-      <genClasses ecoreClass="semantic.ecore#//knowledgegraph/Entity">
+      <genClasses ecoreClass="semantic.ecore#//knowledgegraph/KGentity">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/Entity/context_ref"/>
+            ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/KGentity/context_ref"/>
       </genClasses>
       <genClasses ecoreClass="semantic.ecore#//knowledgegraph/KGroot">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/KGroot/document"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/KGroot/relation"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/KGroot/entity"/>
       </genClasses>
-      <genClasses ecoreClass="semantic.ecore#//knowledgegraph/Relation">
+      <genClasses ecoreClass="semantic.ecore#//knowledgegraph/KGrelation">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/Relation/target_node"/>
+            ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/KGrelation/target_node"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/Relation/source_node"/>
+            ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/KGrelation/source_node"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/Relation/context_ref"/>
+            ecoreFeature="ecore:EReference semantic.ecore#//knowledgegraph/KGrelation/context_ref"/>
       </genClasses>
       <genClasses image="false" ecoreClass="semantic.ecore#//knowledgegraph/INode">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"

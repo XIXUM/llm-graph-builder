@@ -1,14 +1,14 @@
 from pyecore.resources import global_registry
 from .dictionary import getEClassifier, eClassifiers
 from .dictionary import name, nsURI, nsPrefix, eClass
-from .dictionary import DictionaryRoot, Word, WordClass, Stem, IDictionaryEl
+from .dictionary import DictionaryRoot, LexicalWord, WordClass, Stem, IDictionaryEl
 
 
 from . import dictionary
 from .. import semantics
 
 
-__all__ = ['DictionaryRoot', 'Word', 'WordClass', 'Stem', 'IDictionaryEl']
+__all__ = ['DictionaryRoot', 'LexicalWord', 'WordClass', 'Stem', 'IDictionaryEl']
 
 eSubpackages = []
 eSuperPackage = semantics

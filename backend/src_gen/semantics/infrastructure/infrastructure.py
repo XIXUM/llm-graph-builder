@@ -83,7 +83,7 @@ class PathEl(ISubDir):
             self.artifact.extend(artifact)
 
 
-class Domain(ILocation, IWebLocation):
+class Device(IInfrastructureEl, ILocalLocation):
 
     subdir = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
 
@@ -95,7 +95,7 @@ class Domain(ILocation, IWebLocation):
             self.subdir.extend(subdir)
 
 
-class Device(IInfrastructureEl, ILocalLocation):
+class Domain(IWebLocation, IInfrastructureEl):
 
     subdir = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
 

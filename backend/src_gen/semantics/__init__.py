@@ -4,12 +4,12 @@ from .semantics import name, nsURI, nsPrefix, eClass
 from .semantics import INamable, IDataComponent, Property, IValueComponent, StringProperty, IntProperty, FloatProperty, BoolProperty, ListProperty, MapProperty, Pair, IIdentifiable, IAtomic, IAggregated, IIterable, IContainable, IPropertyable
 
 
-from .artifact import Token, NonVoidTag, Document, ITextBodyEl, Styleable, RowBlockEl, Number, Paragraph, Word, Cell, MetaElement, Artifact, GridBlockEl, Sentence, XMLdocument, RowContainer, CSS_Style, PlainText
-from .infrastructure import Environment, PathEl, ISubDir, Domain, Device, ILocation
-from .context import Relation, State, Time, Event, IRefferable, Entity, IChronological, Class, ContextRoot
-from .dictionary import DictionaryRoot, Word, WordClass, Stem
-from .ruleset import RuleRoot, Predicate, Token
-from .knowledgegraph import KGroot, INode, Relation, Entity, Chunk, Document
+from .artifact import Paragraph, ITextBodyEl, Word, GridBlockEl, Sentence, XMLdocument, RowBlockEl, RowContainer, Token, PlainText, CSS_Style, NonVoidTag, Styleable, Cell, Document, Artifact, MetaElement, Number
+from .infrastructure import ILocation, Device, Environment, ISubDir, PathEl, Domain
+from .context import IChronological, Class, ContextRoot, IRefferable, Relation, State, Event, Time, Entity
+from .dictionary import LexicalWord, Stem, WordClass, DictionaryRoot
+from .ruleset import Token, Predicate, RuleRoot
+from .knowledgegraph import KGchunk, KGdocument, KGentity, KGroot, INode, KGrelation
 from . import semantics
 from . import artifact
 
@@ -34,7 +34,7 @@ semantics.eSuperPackage = eSuperPackage
 
 Paragraph.sentence.eType = Sentence
 Sentence.token.eType = Token
-Word.word.eType = Word
+Word.word.eType = LexicalWord
 Number.value.eType = IAtomic
 PlainText.blockElement.eType = ITextBodyEl
 PlainText.rowblockel.eType = RowBlockEl
@@ -58,25 +58,25 @@ ContextRoot.relation.eType = Relation
 ContextRoot.class_.eType = Class
 Entity.state.eType = State
 IChronological.synchronous.eType = IChronological
-DictionaryRoot.word.eType = Word
 DictionaryRoot.wordclass.eType = WordClass
-Word.ofType.eType = WordClass
-Word.baseform.eType = Word
-Word.stem.eType = Stem
+DictionaryRoot.word.eType = LexicalWord
+LexicalWord.ofType.eType = WordClass
+LexicalWord.baseform.eType = LexicalWord
+LexicalWord.stem.eType = Stem
 RuleRoot.token.eType = Token
 RuleRoot.command.eType = Predicate
-Document.chunk.eType = Chunk
-Chunk.entity.eType = Entity
-KGroot.document.eType = Document
-KGroot.relation.eType = Relation
+KGdocument.chunk.eType = KGchunk
+KGroot.document.eType = KGdocument
+KGroot.relation.eType = KGrelation
+KGroot.entity.eType = KGentity
 ListProperty.entry.eType = Property
 MapProperty.entry.eType = Pair
 Pair.key.eType = Property
 Pair.value.eType = Property
 IPropertyable.property.eType = Property
-Document.kg_reference.eType = Document
-ITextBodyEl.chunk.eType = Chunk
-Entity.kg_entity.eType = Entity
+Document.kg_reference.eType = KGdocument
+ITextBodyEl.chunk.eType = KGchunk
+Entity.kg_entity.eType = KGentity
 Entity.class_.eType = Class
 Event.next.eType = Event
 Event.previous.eType = Event
@@ -89,7 +89,7 @@ Time.event.eType = Event
 Time.event.eOpposite = Event.time
 Relation.active_entity.eType = IRefferable
 Relation.passive_entity.eType = IRefferable
-Relation.kg_relation.eType = Relation
+Relation.kg_relation.eType = KGrelation
 IChronological.after.eType = IChronological
 IChronological.before.eType = IChronological
 IChronological.before.eOpposite = IChronological.after
@@ -108,20 +108,20 @@ Predicate.activeToken.eType = Token
 Predicate.activeToken.eOpposite = Token.command
 Predicate.passiveToken.eType = Token
 Predicate.passiveToken.eOpposite = Token.operation
-Document.context_ref.eType = Document
-Document.context_ref.eOpposite = Document.kg_reference
-Chunk.context_ref.eType = ITextBodyEl
-Chunk.context_ref.eOpposite = ITextBodyEl.chunk
-Entity.context_ref.eType = Entity
-Entity.context_ref.eOpposite = Entity.kg_entity
-Relation.target_node.eType = INode
-Relation.source_node.eType = INode
-Relation.context_ref.eType = Relation
-Relation.context_ref.eOpposite = Relation.kg_relation
-INode.in_relation.eType = Relation
-INode.in_relation.eOpposite = Relation.target_node
-INode.out_relation.eType = Relation
-INode.out_relation.eOpposite = Relation.source_node
+KGdocument.context_ref.eType = Document
+KGdocument.context_ref.eOpposite = Document.kg_reference
+KGchunk.context_ref.eType = ITextBodyEl
+KGchunk.context_ref.eOpposite = ITextBodyEl.chunk
+KGentity.context_ref.eType = Entity
+KGentity.context_ref.eOpposite = Entity.kg_entity
+KGrelation.target_node.eType = INode
+KGrelation.source_node.eType = INode
+KGrelation.context_ref.eType = Relation
+KGrelation.context_ref.eOpposite = Relation.kg_relation
+INode.in_relation.eType = KGrelation
+INode.in_relation.eOpposite = KGrelation.target_node
+INode.out_relation.eType = KGrelation
+INode.out_relation.eOpposite = KGrelation.source_node
 
 otherClassifiers = []
 

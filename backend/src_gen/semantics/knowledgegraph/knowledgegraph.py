@@ -18,8 +18,9 @@ class KGroot(EObject, metaclass=MetaEClass):
 
     document = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
     relation = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
+    entity = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
 
-    def __init__(self, *, document=None, relation=None):
+    def __init__(self, *, document=None, relation=None, entity=None):
         # if kwargs:
         #    raise AttributeError('unexpected arguments: {}'.format(kwargs))
 
@@ -31,8 +32,11 @@ class KGroot(EObject, metaclass=MetaEClass):
         if relation:
             self.relation.extend(relation)
 
+        if entity:
+            self.entity.extend(entity)
 
-class Relation(EObject, metaclass=MetaEClass):
+
+class KGrelation(EObject, metaclass=MetaEClass):
 
     target_node = EReference(ordered=True, unique=True, containment=False, derived=False)
     source_node = EReference(ordered=True, unique=True, containment=False, derived=False)
@@ -73,7 +77,7 @@ class INode(EObject, metaclass=MetaEClass):
             self.out_relation = out_relation
 
 
-class Document(INode):
+class KGdocument(INode):
 
     chunk = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
     context_ref = EReference(ordered=True, unique=True, containment=False, derived=False)
@@ -89,23 +93,19 @@ class Document(INode):
             self.context_ref = context_ref
 
 
-class Chunk(INode):
+class KGchunk(INode):
 
-    entity = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
     context_ref = EReference(ordered=True, unique=True, containment=False, derived=False)
 
-    def __init__(self, *, entity=None, context_ref=None, **kwargs):
+    def __init__(self, *, context_ref=None, **kwargs):
 
         super().__init__(**kwargs)
-
-        if entity:
-            self.entity.extend(entity)
 
         if context_ref is not None:
             self.context_ref = context_ref
 
 
-class Entity(INode):
+class KGentity(INode):
 
     context_ref = EReference(ordered=True, unique=True, containment=False, derived=False)
 
