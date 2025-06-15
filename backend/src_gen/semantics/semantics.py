@@ -119,14 +119,6 @@ class Pair(IAggregated):
 
 
 @abstract
-class IIterable(IAggregated):
-
-    def __init__(self, **kwargs):
-
-        super().__init__(**kwargs)
-
-
-@abstract
 class IContainable(IAggregated):
 
     def __init__(self, **kwargs):
@@ -136,6 +128,14 @@ class IContainable(IAggregated):
 
 @abstract
 class Property(IValueComponent):
+
+    def __init__(self, **kwargs):
+
+        super().__init__(**kwargs)
+
+
+@abstract
+class IIterable(IContainable):
 
     def __init__(self, **kwargs):
 
@@ -190,7 +190,7 @@ class BoolProperty(Property, IAtomic):
             self.value = value
 
 
-class ListProperty(Property, IIterable):
+class MapProperty(Property, IContainable):
 
     entry = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
 
@@ -202,7 +202,7 @@ class ListProperty(Property, IIterable):
             self.entry.extend(entry)
 
 
-class MapProperty(Property, IIterable):
+class ListProperty(Property, IIterable):
 
     entry = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
 

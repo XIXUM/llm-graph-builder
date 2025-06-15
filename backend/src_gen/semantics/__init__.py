@@ -6,7 +6,7 @@ from .semantics import INamable, IDataComponent, Property, IValueComponent, Stri
 
 from .artifact import Token, NonVoidTag, Document, ITextBodyEl, Styleable, RowBlockEl, Number, Paragraph, Word, Cell, MetaElement, Artifact, GridBlockEl, Sentence, XMLdocument, RowContainer, CSS_Style, PlainText
 from .infrastructure import Environment, PathEl, ISubDir, Domain, Device, ILocation
-from .context import Relation, State, Class, Time, Event, IRefferable, IChronological, Entity, ContextRoot
+from .context import Relation, State, Class, Event, Time, IRefferable, IChronological, Entity, ContextRoot
 from .dictionary import LexicalWord, Stem, DictionaryRoot, WordClass
 from .ruleset import RuleRoot, Predicate, Token
 from .knowledgegraph import INode, KGrelation, KGchunk, KGentity, KGdocument, KGroot
