@@ -56,7 +56,8 @@ def handle_atomic(value, prop: (IntProperty, FloatProperty, StringProperty)):
 def handle_aggregated(value, prop: ListProperty):
     if isinstance(value, (list,tuple)):
         for i, v in enumerate(value):
-            create_property(i, v)
+            prop.entry.append(create_property(i, v))
+        return prop
     else:
         raise TypeError(f"Unsupported type: {type(value).__name__}")
 
@@ -65,11 +66,11 @@ def handle_map(value, prop: MapProperty):
     if isinstance(value, dict):
         for i, (k, v) in enumerate(value.items()):
             key = create_property(i, k)
-            value = create_property(i, v)
+            val = create_property(i, v)
             pair = Pair()
             pair.key = key
-            pair.value = value
-            value.e
+            pair.value = val
+            prop.entry.append(pair)
     else:
         raise TypeError(f"Unsupported type: {type(value).__name__}")
 
@@ -96,17 +97,24 @@ def switch(prop, value):
     return handler(value, prop)
 
 def create_property(name: str, value: object) -> Property:
-    if not value:
-        raise ValueError(f"Value name {name} is empty or null.")
+    """
+    creates a property according to the provided value type
+    Args:
+        name:
+        value:
+    Returns:
+        object of type Property
+    """
+    if value is None:
+        raise ValueError(f"Value name {name} is null.")
     prop = typed_property_factory[type(value)]()
-    prop.name = name
-    if isinstance(prop, IContainable):
-        #only append if not null
-        if value:
-            expand_aggregated_value(prop, value)
-    else:
-        prop.value = value
 
-    return prop
+    if isinstance(name, str):
+        prop.name = name
+    else:
+        if isinstance(name, int):
+            prop.index = name
+        prop.name = str(name)
+    return switch(prop, value)
 
 

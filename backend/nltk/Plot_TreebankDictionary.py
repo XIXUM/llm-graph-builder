@@ -337,7 +337,8 @@ if __name__ == "__main__":
         arch = platform.architecture()
         propPlatform = EcoreTools.create_property("System", localsystem)
         env.property.append(propPlatform)
-        prop_Cpu = EcoreTools.create_property("dict", "cpu")
+        prop_Cpu = EcoreTools.create_property("CPU", arch)
+        env.property.append(prop_Cpu)
 
         generateInfrastructureToArtifact(documentPath, env)
 
