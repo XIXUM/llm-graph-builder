@@ -25,7 +25,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="entry" upperBound="-1"
         eType="#//Property" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="MapProperty" eSuperTypes="#//Property #//IIterable">
+  <eClassifiers xsi:type="ecore:EClass" name="MapProperty" eSuperTypes="#//Property #//IContainable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="entry" upperBound="-1"
         eType="#//Pair" containment="true"/>
   </eClassifiers>
@@ -41,7 +41,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="IAtomic" abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="IAggregated" abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="IIterable" abstract="true" interface="true"
-      eSuperTypes="#//IAggregated"/>
+      eSuperTypes="#//IContainable"/>
   <eClassifiers xsi:type="ecore:EClass" name="IContainable" abstract="true" interface="true"
       eSuperTypes="#//IAggregated"/>
   <eClassifiers xsi:type="ecore:EClass" name="IPropertyable" abstract="true" interface="true">
@@ -146,7 +146,7 @@
         eSuperTypes="#//infrastructure/IInfrastructureEl"/>
     <eClassifiers xsi:type="ecore:EClass" name="IInfrastructureEl" abstract="true"
         interface="true" eSuperTypes="#//INamable"/>
-    <eClassifiers xsi:type="ecore:EClass" name="Environment" eSuperTypes="#//INamable">
+    <eClassifiers xsi:type="ecore:EClass" name="Environment" eSuperTypes="#//INamable #//IPropertyable">
       <eStructuralFeatures xsi:type="ecore:EReference" name="location" upperBound="-1"
           eType="#//infrastructure/ILocation" containment="true"/>
     </eClassifiers>
