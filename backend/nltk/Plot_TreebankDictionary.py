@@ -335,7 +335,7 @@ if __name__ == "__main__":
         env.name = "System Environment"
         localsystem = platform.system()
         arch = platform.architecture()
-        propPlatform = EcoreTools.create_property("string", "System", localsystem)
+        propPlatform = EcoreTools.create_property("System", localsystem)
         env.property.append(propPlatform)
         prop_Cpu = EcoreTools.create_property("dict", "cpu")
 
