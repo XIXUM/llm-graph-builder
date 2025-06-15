@@ -1,4 +1,5 @@
-from semantics import StringProperty, IntProperty, FloatProperty, ListProperty, MapProperty, BoolProperty, IAggregated
+from semantics import StringProperty, IntProperty, FloatProperty, ListProperty, MapProperty, BoolProperty, IAggregated, \
+    IContainable
 
 property_factory = {
     "string": StringProperty,
@@ -20,7 +21,7 @@ property_factory = {
 def create_property(datatype: str, name: str, value=None):
     prop = property_factory[datatype.lower()]()
     prop.name = name
-    if isinstance(prop, IAggregated):
+    if isinstance(prop, IContainable):
         #only append if not null
         if value:
             prop.value.append(value)

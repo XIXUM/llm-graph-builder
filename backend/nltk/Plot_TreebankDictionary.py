@@ -1,16 +1,19 @@
 from datetime import datetime
+import platform
 
 import nltk
 import re
 from typing import List
 from neomodel import StructuredNode, StringProperty, IntegerProperty
 from oauthlib.uri_validate import absolute_URI
+from setuptools.msvc import SystemInfo
 
 from Neo4jAccess import Neo4jDatabaseClient
 from pathlib import Path
 import inspect
 
-from semantics import Environment
+from semantics import Environment, Property, StringProperty
+from src.util import EcoreTools
 
 # Ensure NLTK sentence tokenizer is available
 nltk.download('punkt')
@@ -320,7 +323,7 @@ def generateInfrastructureToArtifact(documentPath: Path, env: Environment):
 
     """
     absolute = documentPath.absolute()
-    absolute.is_mount()
+    absolute.parts
 
 
 if __name__ == "__main__":
@@ -329,7 +332,13 @@ if __name__ == "__main__":
     # Example usage
     try:
         env = Environment()
-        env.name = "Global Infrastructure"
+        env.name = "System Environment"
+        localsystem = platform.system()
+        arch = platform.architecture()
+        propPlatform = EcoreTools.create_property("string", "System", localsystem)
+        env.property.append(propPlatform)
+        prop_Cpu = EcoreTools.create_property("dict", "cpu")
+
         generateInfrastructureToArtifact(documentPath, env)
 
 

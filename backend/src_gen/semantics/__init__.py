@@ -4,12 +4,12 @@ from .semantics import name, nsURI, nsPrefix, eClass
 from .semantics import INamable, IDataComponent, Property, IValueComponent, StringProperty, IntProperty, FloatProperty, BoolProperty, ListProperty, MapProperty, Pair, IIdentifiable, IAtomic, IAggregated, IIterable, IContainable, IPropertyable
 
 
-from .artifact import Paragraph, ITextBodyEl, Word, GridBlockEl, Sentence, XMLdocument, RowBlockEl, RowContainer, Token, PlainText, CSS_Style, NonVoidTag, Styleable, Cell, Document, Artifact, MetaElement, Number
-from .infrastructure import ILocation, Device, Environment, ISubDir, PathEl, Domain
-from .context import IChronological, Class, ContextRoot, IRefferable, Relation, State, Event, Time, Entity
-from .dictionary import LexicalWord, Stem, WordClass, DictionaryRoot
-from .ruleset import Token, Predicate, RuleRoot
-from .knowledgegraph import KGchunk, KGdocument, KGentity, KGroot, INode, KGrelation
+from .artifact import Token, NonVoidTag, Document, ITextBodyEl, Styleable, RowBlockEl, Number, Paragraph, Word, Cell, MetaElement, Artifact, GridBlockEl, Sentence, XMLdocument, RowContainer, CSS_Style, PlainText
+from .infrastructure import Environment, PathEl, ISubDir, Domain, Device, ILocation
+from .context import Relation, State, Class, Time, Event, IRefferable, IChronological, Entity, ContextRoot
+from .dictionary import LexicalWord, Stem, DictionaryRoot, WordClass
+from .ruleset import RuleRoot, Predicate, Token
+from .knowledgegraph import INode, KGrelation, KGchunk, KGentity, KGdocument, KGroot
 from . import semantics
 from . import artifact
 

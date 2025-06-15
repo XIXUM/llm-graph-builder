@@ -2,7 +2,7 @@
 from functools import partial
 import pyecore.ecore as Ecore
 from pyecore.ecore import *
-from semantics import IPropertyable, IIdentifiable, IContainable, IDataComponent, INamable
+from semantics import IIdentifiable, IContainable, IDataComponent, IPropertyable, INamable
 
 
 name = 'artifact'

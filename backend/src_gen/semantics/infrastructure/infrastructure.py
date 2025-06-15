@@ -2,7 +2,7 @@
 from functools import partial
 import pyecore.ecore as Ecore
 from pyecore.ecore import *
-from semantics import INamable
+from semantics import INamable, IPropertyable
 
 
 name = 'infrastructure'
@@ -23,18 +23,6 @@ class IInfrastructureEl(INamable):
         super().__init__(**kwargs)
 
 
-class Environment(INamable):
-
-    location = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
-
-    def __init__(self, *, location=None, **kwargs):
-
-        super().__init__(**kwargs)
-
-        if location:
-            self.location.extend(location)
-
-
 @abstract
 class ILocation(INamable):
 
@@ -49,6 +37,18 @@ class ISubDir(IInfrastructureEl):
     def __init__(self, **kwargs):
 
         super().__init__(**kwargs)
+
+
+class Environment(INamable, IPropertyable):
+
+    location = EReference(ordered=True, unique=True, containment=True, derived=False, upper=-1)
+
+    def __init__(self, *, location=None, **kwargs):
+
+        super().__init__(**kwargs)
+
+        if location:
+            self.location.extend(location)
 
 
 @abstract
